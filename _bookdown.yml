@@ -1,0 +1,15 @@
+book_filename: "recsn-book"
+rmd_files:
+  - index.Rmd
+  - 01-getting-started.Rmd
+  - 02-descriptive-ess.Rmd
+  - 03-linear-interactions.Rmd
+  - 04-logistic-regression.Rmd
+  - 05-country-effects.Rmd
+  - 06-survey-weights.Rmd
+  - 05-appendix.Rmd
+delete_merged_file: true
+new_session: yes
+language:
+  ui:
+    chapter_name: "Chapter "

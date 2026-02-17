@@ -1,0 +1,8 @@
+.Rhistory
+.RData
+.Rproj.user/
+
+# Bookdown/R Markdown build artifacts
+_main.Rmd
+_book/
+_bookdown_files/

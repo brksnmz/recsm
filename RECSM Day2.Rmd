@@ -1,0 +1,117 @@
+---
+title: 'RECSM: Quantitative Methods in Social Research'
+author: "Burak Sonmez"
+subtitle: Day 2 - 03 07 2025
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+------------------------------------------------------------------------
+
+**Please skim through all of the instructions before getting started.**
+
+## Problem set
+
+**Step 1**: Open a new script and save it as day2. Clear your workspace.
+
+**Step 2**: Load the Asylum dataset from yesterday.
+
+**Step 3**: Explore the potential correlations between perception bias towards Syrian asylum seekers and other variables in the dataset
+
+**Step 4**: Estimate a linear regression model that explains perception bias towards Syrian asylum seekers using only one independent variable. Please justify your choice. Try to come up with a reasonable argument (e.g.) why more of x should lead to more/less of y).
+
+**Step 5**: Plot a scatterplot of that relationship and add the best fit line to the plot.
+
+**Step 6**: Interpret the regression output and try to imagine that you are communicating these results to your neighbours who are statistically illiterate
+
+**Step 7**: Reiterate the process from step 3. Estimate another model -- you can choose a different independent variable on the same dependent variable.
+
+**Step 8**: Interpret theese new regression output.
+
+**Step 9**: Please compare the two models and explain which one you would choose.
+
+**Step 10**: Produce a regression table with both models next to each other in some text document, using 'texreg'.
+
+**Step 11**: Add some additional explanatory variables (no more than 4) to your model.
+
+**Step 12**: Interpret the output of the new model in relation to the previous model.
+
+**Step 13**: Check whether the model assumptions are violated (e.g. collinearity issues; normality assumption; heteroskedasticity). To do so, you can use 'performance' package.
+
+**Step 14**: Add an interaction term to the model (e.g. age x news). First, summarise the model and interpret the output of the new model. Then plot the relationship between perception bias and age moderated by tabloid readership.
+
+## Solutions for the problem set
+
+```{r package, include=TRUE, echo=TRUE}
+##Instal the packages first if those packages are not installed before
+library(ggplot2)
+library(texreg)
+library(corrplot)
+library(performance)
+library(RColorBrewer)
+library(effects)
+```
+
+```{r prob1, include=TRUE, echo=TRUE}
+#Remove objects from the environment
+rm(list=ls())
+#Set your working directory
+setwd("~/Downloads/RECSM workshop")
+
+load("asylum_data.RData")
+names(asy)
+
+#Visualise correlations
+cor <- cor(asy)
+corrplot(cor, order = "hclust", addrect = 2)
+
+#Estimating a bivariate linear regression model
+model1 <- lm(asylum ~ age, data = asy)
+
+#Plotting the relationship and adding the fit line
+plot(
+  asylum ~ age, data = asy,
+  xlab = "Age",
+  ylab = "Perception bias towards Syrian Refugees",
+  frame.plot = FALSE,
+  pch = 16,
+  col = brewer.pal(n = 3, name = "Dark2"))
+abline(model1, lwd = 3,
+       col = "blue")
+
+##Interpret the regression output in a table
+screenreg(model1)
+
+#Estimating another bivariate linear regression model
+#Don't forget to convert it into a factor 
+asy$partyid <- factor(asy$partyid, labels = c("Tories", "Labour", "SNP", "Greens", "Ukip", "BNP", "other"))
+
+model2 <- lm(asylum ~ partyid, data = asy)
+
+screenreg( list(model1, model2))
+
+#Multiple linear regression
+asy$news <- factor(asy$news, labels = c("Don't read", "Read"))
+asy$sex <- factor(asy$sex, labels = c("Male", "Female"))
+
+model3 <- lm(asylum ~ age + sex + news+ partyid, data = asy)
+
+screenreg(list(model1, model2, model3))
+
+#Model assumptions check and interpret the plots
+#check_model(model1)
+#check_model(model2)
+#check_model(model3)
+#Interaction model
+int.model <- lm(asylum ~ sex + age*news+ partyid, data = asy)
+summary(int.model)
+#Plotting
+#plot(allEffects(int.model)$age)
+```

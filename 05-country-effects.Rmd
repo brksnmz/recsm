@@ -1,0 +1,164 @@
+# Country effects — fixed effects and multilevel modeling
+
+Nested survey data call for explicit country handling. This chapter shows two approaches:
+
+- **Country fixed effects (dummies):** absorbs unobserved, time-invariant differences between GB, DE, and FR.
+- **Multilevel (random-intercept) logistic regression:** partially pools country effects, reducing noise for small samples and enabling variance decomposition.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 7, fig.height = 4)
+Sys.setenv(OMP_NUM_THREADS = 1,
+           OPENBLAS_NUM_THREADS = 1,
+           MKL_NUM_THREADS = 1,
+           VECLIB_MAXIMUM_THREADS = 1)
+```
+
+```{r packages}
+library(dplyr)
+library(ggplot2)
+library(broom)
+library(broom.mixed)
+library(lme4)
+library(tidyr)
+
+source("R/clean_ess.R")
+
+ess <- clean_ess()
+```
+
+## 1. Country fixed effects (logit with dummies)
+
+- **Model**: `news_regular ~ agea + gender + eduyrs + country`
+- **Interpretation**: Country coefficients capture average gaps relative to the reference country (DE, alphabetically first).
+
+```{r fe-fit}
+fe_logit <- glm(news_regular ~ agea + gender + eduyrs + country,
+                data = ess, family = binomial())
+fe_tidy <- broom::tidy(fe_logit, exponentiate = TRUE, conf.int = TRUE)
+```
+
+#### Odds ratios {.tabset}
+
+##### Table
+
+```{r fe-table, echo=FALSE}
+fe_tidy
+```
+
+##### Country contrasts (plot)
+
+```{r fe-plot, echo=FALSE}
+nd_fe <- data.frame(
+  country = levels(ess$country),
+  gender = "Female",
+  agea = mean(ess$agea, na.rm = TRUE),
+  eduyrs = mean(ess$eduyrs, na.rm = TRUE)
+)
+nd_fe$pr_fixed <- predict(fe_logit, newdata = nd_fe, type = "response")
+
+ggplot(nd_fe, aes(x = country, y = pr_fixed)) +
+  geom_col(fill = "#72B7B2", width = 0.55) +
+  geom_text(aes(label = sprintf("%.2f", pr_fixed)), vjust = -0.35, size = 3.3) +
+  labs(y = "Pr(regular news)", x = "Country",
+       title = "Country fixed effects (controls at means)") +
+  ylim(0, max(nd_fe$pr_fixed) + 0.08) +
+  theme_minimal()
+```
+
+Takeaway: Fixed effects wipe out between-country bias but treat each country independently—estimates can be noisy if a country has few cases.
+
+## 2. Multilevel logistic model (random intercepts by country)
+
+- **Model**: `news_regular ~ agea + gender + eduyrs + (1 | country)`
+- **Why**: Partial pooling shrinks extreme country estimates toward the grand mean, improving out-of-sample stability.
+
+```{r ml-fit}
+ml_logit <- glmer(news_regular ~ agea + gender + eduyrs + (1 | country),
+                  data = ess, family = binomial(),
+                  control = glmerControl(optimizer = "bobyqa"))
+
+var_u0 <- as.numeric(VarCorr(ml_logit)$country)
+icc <- var_u0 / (var_u0 + pi^2 / 3)
+```
+
+Intraclass correlation (ICC): `r sprintf('%.2f', icc*100)`% of the variance in the log-odds of regular news use is at the country level.
+
+### Country predictions: fixed vs multilevel
+
+```{r compare-preds, echo=FALSE}
+nd_ml <- nd_fe
+nd_ml$pr_ml_cond <- predict(ml_logit, newdata = nd_ml, type = "response", re.form = NULL)
+
+pred_long <- tidyr::pivot_longer(
+  nd_ml,
+  cols = c(pr_fixed, pr_ml_cond),
+  names_to = "model", values_to = "pr"
+) |>
+  mutate(model = dplyr::recode(model,
+                               pr_fixed = "Fixed effects (dummies)",
+                               pr_ml_cond = "Multilevel (BLUP)"))
+
+ggplot(pred_long, aes(x = country, y = pr, fill = model)) +
+  geom_col(position = position_dodge(width = 0.6), width = 0.5) +
+  geom_text(aes(label = sprintf('%.2f', pr)), position = position_dodge(width = 0.6),
+            vjust = -0.4, size = 3.1) +
+  labs(y = "Pr(regular news)", x = "Country",
+       title = "Predicted probabilities by country",
+       fill = "Specification") +
+  ylim(0, max(pred_long$pr) + 0.1) +
+  theme_minimal()
+```
+
+Interpretation: Multilevel estimates are closer together because extreme country effects are shrunk toward the overall mean.
+
+### Visualizing country intercepts (shrinkage)
+
+```{r shrinkage, echo=FALSE}
+re_eff <- lme4::ranef(ml_logit, condVar = TRUE)$country |>
+  tibble::rownames_to_column("country") |>
+  dplyr::rename(rand_intercept = `(Intercept)`) |>
+  dplyr::mutate(model = "Multilevel (random intercept)")
+
+fe_beta <- coef(fe_logit)
+fe_effects <- tibble::tibble(
+  country = levels(ess$country),
+  rand_intercept = c(
+    0,
+    fe_beta["countryFR"],
+    fe_beta["countryGB"]
+  ),
+  model = "Fixed effects (relative to DE)"
+)
+
+bind_rows(fe_effects, re_eff) |>
+  ggplot(aes(x = rand_intercept, y = country, color = model)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "grey60") +
+  geom_point(size = 3) +
+  labs(x = "Country-specific intercept (log-odds scale)",
+       y = NULL,
+       title = "Country effects: separate dummies vs partial pooling",
+       color = NULL) +
+  theme_minimal()
+```
+
+Reading the plot: Dots further from 0 indicate larger country-specific deviations. The multilevel model shrinks them toward zero, while fixed effects leave them unchanged.
+
+## 3. Random slopes for gender (optional extension)
+
+With more countries, we could allow the gender gap to vary by country:
+
+```{r gender-slope, eval=FALSE}
+ml_logit_gender <- glmer(
+  news_regular ~ agea + gender + eduyrs + (1 + gender | country),
+  data = ess, family = binomial(),
+  control = glmerControl(optimizer = "bobyqa")
+)
+```
+
+In the current three-country sample this model may be over-parameterized; the random-intercept specification above is the stable classroom default.
+
+## Practice prompts
+
+1. Add an **urban** fixed effect to both models. Do city–rural gaps widen or narrow once country pooling is applied?
+2. Refit the multilevel model with `news_regular` defined as daily readership (`nwsptot >= 5`). How does the ICC change?
+3. Replace `agea` with a spline (`splines::ns(agea, df = 3)`) inside both models and compare the resulting age profiles by country.

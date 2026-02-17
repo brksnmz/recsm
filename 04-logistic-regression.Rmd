@@ -1,0 +1,332 @@
+# Day 3 — Non-linear models: logistic regression
+
+We now model binary outcomes. This replaces the old factor-analysis/PCA content and links three specifications:
+
+- **Linear probability model (LPM):** \(Y_i \in \{0,1\},\ \mathbb{E}[Y_i\mid X_i]=X_i\beta\) (identity link).
+- **Logit:** \(p_i = \Pr(Y_i=1\mid X_i)=\operatorname{logit}^{-1}(X_i\beta)=\frac{e^{X_i\beta}}{1+e^{X_i\beta}}\).
+- **Marginal effects:** \(\frac{\partial p_i}{\partial x_{ik}} = p_i(1-p_i)\beta_k\), highlighting how effects vary with the baseline probability.
+- **Interaction in logit:** For \(p_i = \operatorname{logit}^{-1}(\eta_i)\) with \(\eta_i = \beta_0 + \beta_1 x + \beta_2 z + \beta_3 xz\), the cross-partial effect is \( \frac{\partial^2 p_i}{\partial x\,\partial z} = p_i(1-p_i)(1-2p_i)\beta_1\beta_2 + p_i(1-p_i)\beta_3\); sign can vary with \(p_i\).
+
+**Outcome**: `news_regular` = 1 if a respondent reads newspapers on at least 3 days per week (`nwsptot >= 3`), 0 otherwise.
+
+**Predictors**: age (`agea`), gender (`gndr`), country (`cntry`), education (`eduyrs`), and their interactions.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.width = 7, fig.height = 4)
+Sys.setenv(OMP_NUM_THREADS = 1,
+           OPENBLAS_NUM_THREADS = 1,
+           MKL_NUM_THREADS = 1,
+           VECLIB_MAXIMUM_THREADS = 1,
+           OMP_WAIT_POLICY = "PASSIVE",
+           OMP_DYNAMIC = "FALSE",
+           OMP_THREAD_LIMIT = 1)
+```
+
+```{r fits}
+library(dplyr)
+library(broom)
+library(ggplot2)
+
+source("R/clean_ess.R")
+
+ess <- clean_ess()
+
+# Fit once and reuse
+lpm1   <- lm(news_regular ~ agea + gender + country, data = ess)
+logit1 <- glm(news_regular ~ agea + gender + country, data = ess, family = binomial())
+logit2 <- glm(news_regular ~ gender * country + agea, data = ess, family = binomial())
+logit3 <- glm(news_regular ~ gender * agea + country + eduyrs, data = ess, family = binomial())
+logit4 <- glm(news_regular ~ agea * eduyrs + gender + country, data = ess, family = binomial())
+logit5 <- glm(news_regular ~ gender * agea * country + eduyrs, data = ess, family = binomial())
+
+# Prediction data for plots
+age_seq <- seq(min(ess$agea, na.rm = TRUE), max(ess$agea, na.rm = TRUE), length.out = 60)
+edu_seq <- seq(min(ess$eduyrs, na.rm = TRUE), max(ess$eduyrs, na.rm = TRUE), length.out = 40)
+
+nd2 <- expand.grid(country = c("GB","DE","FR"),
+                   gender = c("Male","Female"),
+                   agea = mean(ess$agea, na.rm = TRUE))
+pred2 <- predict(logit2, newdata = nd2, type = "link", se.fit = TRUE)
+nd2$pr <- plogis(pred2$fit)
+nd2$lo <- plogis(pred2$fit - 1.96 * pred2$se.fit)
+nd2$hi <- plogis(pred2$fit + 1.96 * pred2$se.fit)
+plot_gender_country <- ggplot(nd2, aes(x = country, y = pr, fill = gender)) +
+  geom_col(position = position_dodge(width = 0.6), width = 0.5) +
+  geom_errorbar(aes(ymin = lo, ymax = hi), position = position_dodge(width = 0.6), width = 0.2) +
+  labs(y = "Pr(regular news)") +
+  theme_minimal()
+
+nd3 <- expand.grid(agea = age_seq, gender = c("Male","Female"),
+                   country = "GB", eduyrs = mean(ess$eduyrs, na.rm = TRUE))
+pred3 <- predict(logit3, newdata = nd3, type = "link", se.fit = TRUE)
+nd3$pr <- plogis(pred3$fit)
+nd3$lo <- plogis(pred3$fit - 1.96 * pred3$se.fit)
+nd3$hi <- plogis(pred3$fit + 1.96 * pred3$se.fit)
+plot_gender_age <- ggplot(nd3, aes(x = agea, y = pr, color = gender)) +
+  geom_line(size = 1) +
+  geom_ribbon(aes(ymin = lo, ymax = hi, fill = gender), alpha = 0.15, color = NA) +
+  labs(y = "Pr(regular news)", x = "Age") +
+  theme_minimal()
+
+nd4 <- expand.grid(eduyrs = edu_seq,
+                   agea = quantile(ess$agea, c(.2,.5,.8), na.rm = TRUE),
+                   gender = "Male", country = "GB")
+pred4 <- predict(logit4, newdata = nd4, type = "link", se.fit = TRUE)
+nd4$pr <- plogis(pred4$fit)
+nd4$lo <- plogis(pred4$fit - 1.96 * pred4$se.fit)
+nd4$hi <- plogis(pred4$fit + 1.96 * pred4$se.fit)
+plot_age_edu <- ggplot(nd4, aes(x = eduyrs, y = pr, color = factor(agea))) +
+  geom_line(size = 1) +
+  geom_ribbon(aes(ymin = lo, ymax = hi, fill = factor(agea)), alpha = 0.12, color = NA) +
+  labs(y = "Pr(regular news)", x = "Years of education", color = "Age quantile") +
+  theme_minimal()
+
+nd5 <- expand.grid(agea = age_seq,
+                   gender = c("Male","Female"),
+                   country = c("GB","DE","FR"),
+                   eduyrs = mean(ess$eduyrs, na.rm = TRUE))
+pred5 <- predict(logit5, newdata = nd5, type = "link", se.fit = TRUE)
+nd5$pr <- plogis(pred5$fit)
+nd5$lo <- plogis(pred5$fit - 1.96 * pred5$se.fit)
+nd5$hi <- plogis(pred5$fit + 1.96 * pred5$se.fit)
+plot_threeway <- ggplot(nd5, aes(x = agea, y = pr, color = gender)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = lo, ymax = hi, fill = gender), alpha = 0.12, color = NA) +
+  facet_wrap(~ country) +
+  labs(y = "Pr(regular news)", x = "Age") +
+  theme_minimal()
+
+# Average marginal effects (finite-difference, no parallelism)
+calc_ame <- function(model, data, var, step = 1) {
+  data_hi <- data
+  if (is.numeric(data_hi[[var]])) {
+    data_hi[[var]] <- data_hi[[var]] + step
+  } else if (is.factor(data_hi[[var]]) || is.character(data_hi[[var]])) {
+    # flip binary factor
+    if (all(na.omit(unique(data_hi[[var]])) %in% c("Male","Female"))) {
+      data_hi[[var]] <- ifelse(data_hi[[var]] == "Female", "Male", "Female")
+    }
+  }
+  p_hi <- predict(model, newdata = data_hi, type = "response")
+  p_lo <- predict(model, newdata = data, type = "response")
+  mean(p_hi - p_lo, na.rm = TRUE)
+}
+ame_age  <- calc_ame(logit5, ess, "agea", step = 1)
+ame_fem  <- calc_ame(logit5, ess, "gender", step = 0)  # Female vs Male switch
+ame_table <- tibble(
+  variable = c("agea (+1 year)", "gender (Female vs Male)"),
+  AME = c(ame_age, ame_fem)
+)
+
+# Marginal effect of being Female at age 25 vs 65
+nd_female <- data.frame(agea = c(25,65),
+                        gender = "Female",
+                        country = "GB",
+                        eduyrs = mean(ess$eduyrs, na.rm = TRUE))
+nd_male   <- nd_female; nd_male$gender <- "Male"
+pred_f <- predict(logit5, newdata = nd_female, type = "response")
+pred_m <- predict(logit5, newdata = nd_male,   type = "response")
+me_female_diff <- data.frame(agea = c(25,65),
+                             diff = pred_f - pred_m)
+me_female_plot <- ggplot(me_female_diff, aes(x = factor(agea), y = diff)) +
+  geom_col(fill = "#4C78A8", width = 0.5) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = "Age", y = "Pr(Female) - Pr(Male)", title = "Marginal effect of being Female") +
+  theme_minimal()
+```
+
+## 0. Linear probability model (LPM) first
+
+- **Specification:** \(Y_i = X_i\beta + \varepsilon_i,\ Y_i \in \{0,1\}\). Ordinary least squares with a binary outcome.
+- **Pros:** Coefficients are immediate probability changes (\(\Delta p\)) per unit of \(X\); easy to interpret and to add fixed effects.
+- **Cons:** Predicted values can leave \([0,1]\); errors are heteroskedastic; marginal effects are assumed constant even when baseline risk is near 0 or 1.
+- **When is LPM “safe enough”?** Middle-range probabilities (e.g., 0.2–0.8), modest leverage points, and when the goal is fast descriptive decomposition or fixed-effects absorption. Use robust standard errors.
+
+```{r lpm}
+library(sandwich)
+library(lmtest)
+
+lpm_vcov <- sandwich::vcovHC(lpm1, type = "HC1")
+lpm_tidy <- broom::tidy(lpm1, conf.int = TRUE, vcov = lpm_vcov)
+```
+
+#### Output
+
+```{r lpm-out, echo=FALSE}
+lpm_tidy
+```
+
+#### LPM vs logit predictions
+
+```{r lpm-vs-logit, echo=FALSE}
+nd_lpm <- data.frame(
+  country = levels(ess$country),
+  gender = "Female",
+  agea = mean(ess$agea, na.rm = TRUE)
+)
+nd_lpm$pr_lpm   <- predict(lpm1,   newdata = nd_lpm)
+nd_lpm$pr_logit <- predict(logit1, newdata = nd_lpm, type = "response")
+
+pred_long_lpm <- tidyr::pivot_longer(nd_lpm, cols = c(pr_lpm, pr_logit),
+                                     names_to = "model", values_to = "pr") |>
+  dplyr::mutate(model = dplyr::recode(model,
+                                      pr_lpm = "LPM (OLS)",
+                                      pr_logit = "Logit"))
+
+ggplot(pred_long_lpm, aes(x = country, y = pr, fill = model)) +
+  geom_col(position = position_dodge(width = 0.6), width = 0.5) +
+  geom_text(aes(label = sprintf("%.2f", pr)), position = position_dodge(width = 0.6),
+            vjust = -0.4, size = 3.1) +
+  labs(y = "Predicted probability", x = "Country",
+       title = "LPM vs logit baseline predictions") +
+  ylim(0, max(pred_long_lpm$pr) + 0.1) +
+  theme_minimal()
+```
+
+Observation: If LPM bars stray above 1 or below 0, that signals the need for a logit/probit link. Here the mid-range outcome keeps LPM close, but we switch to logit next for coherent probabilities and curved marginal effects.
+
+## 1. Simple logistic model
+### Simple logistic model {.tabset}
+
+#### Code
+
+```{r logit1-code, eval=FALSE}
+logit1 <- glm(news_regular ~ agea + gender + country, data = ess, family = binomial())
+broom::tidy(logit1, exponentiate = TRUE, conf.int = TRUE)
+```
+
+Odds ratios > 1 indicate higher odds of being a regular news reader.
+
+#### Output
+
+```{r logit1-out, echo=FALSE}
+broom::tidy(logit1, exponentiate = TRUE, conf.int = TRUE)
+```
+Interpretation: Odds ratios >1 raise the chance of regular news use; check if the CI excludes 1 for age, gender, or specific countries before claiming significance.
+
+## 2. Binary × Binary interaction (gender × country) {.tabset}
+
+#### Code
+
+```{r logit2-code, eval=FALSE}
+logit2 <- glm(news_regular ~ gender * country + agea, data = ess, family = binomial())
+plot_gender_country <- ggplot(nd2, aes(x = country, y = pr, fill = gender)) +
+  geom_col(position = position_dodge(width = 0.6), width = 0.5) +
+  labs(y = "Pr(regular news)") +
+  theme_minimal()
+```
+
+#### Output
+
+```{r logit2-out, echo=FALSE}
+broom::tidy(logit2, exponentiate = TRUE, conf.int = TRUE)
+plot_gender_country
+```
+Interpretation: If male–female bars overlap within countries (CI bars), gender differences are modest. Compare across countries to see where the gap is largest.
+
+## 3. Binary × Continuous interaction (gender × age) {.tabset}
+
+#### Code
+
+```{r logit3-code, eval=FALSE}
+logit3 <- glm(news_regular ~ gender * agea + country + eduyrs, data = ess, family = binomial())
+plot_gender_age <- ggplot(nd3, aes(x = agea, y = pr, color = gender)) +
+  geom_line(size = 1) +
+  labs(y = "Pr(regular news)", x = "Age") +
+  theme_minimal()
+```
+
+#### Output
+
+```{r logit3-out, echo=FALSE}
+broom::tidy(logit3, exponentiate = TRUE, conf.int = TRUE)
+plot_gender_age
+```
+Interpretation: Diverging ribbons indicate age effects differ by gender; if both ribbons rise similarly, the interaction is weak.
+
+## 4. Continuous × Continuous interaction (age × education) {.tabset}
+
+#### Code
+
+```{r logit4-code, eval=FALSE}
+logit4 <- glm(news_regular ~ agea * eduyrs + gender + country, data = ess, family = binomial())
+plot_age_edu <- ggplot(nd4, aes(x = eduyrs, y = pr, color = factor(agea))) +
+  geom_line(size = 1) +
+  labs(y = "Pr(regular news)", x = "Years of education", color = "Age quantile") +
+  theme_minimal()
+```
+
+#### Output
+
+```{r logit4-out, echo=FALSE}
+broom::tidy(logit4, exponentiate = TRUE, conf.int = TRUE)
+plot_age_edu
+```
+Interpretation: Steeper lines for higher age quantiles would mean education matters more (or less) for older respondents; overlap implies limited moderation.
+
+## 5. Three-way interaction (gender × age × country) {.tabset}
+
+#### Code
+
+```{r logit5-code, eval=FALSE}
+logit5 <- glm(news_regular ~ gender * agea * country + eduyrs, data = ess, family = binomial())
+plot_threeway <- ggplot(nd5, aes(x = agea, y = pr, color = gender)) +
+  geom_line() +
+  facet_wrap(~ country) +
+  labs(y = "Pr(regular news)", x = "Age") +
+  theme_minimal()
+```
+
+#### Output
+
+```{r logit5-out, echo=FALSE, fig.height=5}
+broom::tidy(logit5, exponentiate = TRUE, conf.int = TRUE)
+plot_threeway
+```
+Interpretation: Scan each country facet—if ribbons separate widely, the age–gender pattern is country-specific; overlapping ribbons suggest similar patterns across countries.
+
+## 6. Marginal effects and interpretation
+
+````r
+# Average marginal effects for age within each country
+ame_age <- marginaleffects(logit5, variables = "agea", by = "country")
+
+# Marginal effect of being Female at age 25 vs age 65
+me_female_age <- marginaleffects(logit5, variables = "gender", newdata = datagrid(agea = c(25, 65)))
+````
+
+- Prefer predicted probabilities and marginal effects over raw log-odds.
+- Inspect separation or influential points with `performance::check_model(logit5)` if desired.
+
+### AMEs and focal contrasts {.tabset}
+
+#### Code
+
+```{r ame-code, eval=FALSE}
+ame_table <- tibble(
+  variable = c("agea (+1 year)", "gender (Female vs Male)"),
+  AME = c(ame_age, ame_fem)
+)
+
+me_female_diff <- data.frame(agea = c(25,65), diff = pred_f - pred_m)  # from fits chunk
+```
+
+#### Output
+
+```{r ame-out, echo=FALSE}
+ame_table
+me_female_plot
+```
+
+Interpretation: The AME for age reports the average change in the probability of regular news use for a one-year increase in age. The bar chart shows how the female–male gap differs at ages 25 vs 65; positive bars mean higher probability for women at that age.
+
+Country-level pooling choices (fixed vs multilevel) are expanded in the next chapter.
+
+## Problem set — Logistic regression practice
+
+1. Recode the outcome as `news_daily = nwsptot >= 5` and re-estimate `logit3`. How do the marginal effects of age change when the bar for “regular” consumption is higher?
+2. Add `urban` (1/2 = urban, 3–5 = non-urban) as a predictor and interact it with `country`. Which country shows the largest urban–rural gap in news readership?
+3. Compare `logit4` and `logit5` using AIC and pseudo R² (`pscl::pR2`). Which balance of complexity and fit seems reasonable for classroom examples?
+4. For one model, translate results into plain language for a non-technical audience: choose two profiles (e.g., 30-year-old woman in GB vs 60-year-old man in FR) and report predicted probabilities.
+
+These exercises deliver a full set of interaction types in a nonlinear setting, ready to complement your lecture slides.
