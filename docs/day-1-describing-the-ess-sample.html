@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Day 1 — Describing the ESS sample | RECSM: Quantitative Methods in Social Research</title>
+  <meta name="description" content="Chapter 3 Day 1 — Describing the ESS sample | RECSM: Quantitative Methods in Social Research" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Day 1 — Describing the ESS sample | RECSM: Quantitative Methods in Social Research" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Day 1 — Describing the ESS sample | RECSM: Quantitative Methods in Social Research" />
+  
+  
+  
+
+<meta name="author" content="Burak Sonmez" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="getting-ready.html"/>
+<link rel="next" href="day-2-linear-regression-with-interaction-effects.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="getting-ready.html"><a href="getting-ready.html"><i class="fa fa-check"></i><b>2</b> Getting Ready</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-ready.html"><a href="getting-ready.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-ready.html"><a href="getting-ready.html#folder-structure"><i class="fa fa-check"></i><b>2.2</b> Folder structure</a></li>
+<li class="chapter" data-level="2.3" data-path="getting-ready.html"><a href="getting-ready.html#load-the-ess-data-once"><i class="fa fa-check"></i><b>2.3</b> Load the ESS data once</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html"><i class="fa fa-check"></i><b>3</b> Day 1 — Describing the ESS sample</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#variables-we-use"><i class="fa fa-check"></i><b>3.1</b> Variables we use</a></li>
+<li class="chapter" data-level="3.2" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#measurement-checks"><i class="fa fa-check"></i><b>3.2</b> Measurement checks</a></li>
+<li class="chapter" data-level="3.3" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#from-description-to-inference"><i class="fa fa-check"></i><b>3.3</b> From description to inference</a></li>
+<li class="chapter" data-level="3.4" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#distributions-and-where-centre-matters"><i class="fa fa-check"></i><b>3.4</b> Distributions and where centre matters</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#quick-distribution-gallery"><i class="fa fa-check"></i><b>3.4.1</b> Quick distribution gallery</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#problem-set-a-univariate-summaries"><i class="fa fa-check"></i><b>3.5</b> Problem set A — Univariate summaries</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#worked-example-a"><i class="fa fa-check"></i><b>3.5.1</b> Worked example A</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#problem-set-b-bivariate-exploration"><i class="fa fa-check"></i><b>3.6</b> Problem set B — Bivariate exploration</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#worked-example-b"><i class="fa fa-check"></i><b>3.6.1</b> Worked example B</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#hypothesis-testing-quick-start"><i class="fa fa-check"></i><b>3.7</b> Hypothesis testing quick-start</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#example-1-two-sample-t-test-mean-trust-by-gender"><i class="fa fa-check"></i><b>3.7.1</b> Example 1: Two-sample t-test (mean trust by gender)</a></li>
+<li class="chapter" data-level="3.7.2" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#example-2-chi-squared-test-gender-regular-news-readership"><i class="fa fa-check"></i><b>3.7.2</b> Example 2: Chi-squared test (gender × regular news readership)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#reflection-prompts"><i class="fa fa-check"></i><b>3.8</b> Reflection prompts</a></li>
+<li class="chapter" data-level="3.9" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#sampling-distributions-by-simulation"><i class="fa fa-check"></i><b>3.9</b> Sampling distributions by simulation</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#simulating-sample-means-of-trust"><i class="fa fa-check"></i><b>3.9.1</b> Simulating sample means of trust</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#hypothesis-testing-recap-slides-practice"><i class="fa fa-check"></i><b>3.10</b> Hypothesis testing recap (slides → practice)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html"><i class="fa fa-check"></i><b>4</b> Day 2 — Linear regression with interaction effects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#ols-intuition-best-fit-line-and-residuals"><i class="fa fa-check"></i><b>4.1</b> OLS intuition: best-fit line and residuals</a></li>
+<li class="chapter" data-level="4.2" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#baseline-linear-model"><i class="fa fa-check"></i><b>4.2</b> 1. Baseline linear model</a></li>
+<li class="chapter" data-level="4.3" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#binary-binary-interaction-gender-urban"><i class="fa fa-check"></i><b>4.3</b> 2. Binary × Binary interaction (gender × urban)</a></li>
+<li class="chapter" data-level="4.4" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#binary-continuous-interaction-gender-age"><i class="fa fa-check"></i><b>4.4</b> 3. Binary × Continuous interaction (gender × age)</a></li>
+<li class="chapter" data-level="4.5" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#continuous-continuous-interaction-age-news-consumption"><i class="fa fa-check"></i><b>4.5</b> 4. Continuous × Continuous interaction (age × news consumption)</a></li>
+<li class="chapter" data-level="4.6" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#three-way-interaction-gender-age-country"><i class="fa fa-check"></i><b>4.6</b> 5. Three-way interaction (gender × age × country)</a></li>
+<li class="chapter" data-level="4.7" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#model-comparison-and-diagnostics"><i class="fa fa-check"></i><b>4.7</b> 6. Model comparison and diagnostics</a></li>
+<li class="chapter" data-level="4.8" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#problem-set-interaction-lab"><i class="fa fa-check"></i><b>4.8</b> Problem set — Interaction lab</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html"><i class="fa fa-check"></i><b>5</b> Day 3 — Non-linear models: logistic regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#linear-probability-model-lpm-first"><i class="fa fa-check"></i><b>5.1</b> 0. Linear probability model (LPM) first</a></li>
+<li class="chapter" data-level="5.2" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#simple-logistic-model"><i class="fa fa-check"></i><b>5.2</b> 1. Simple logistic model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#simple-logistic-model-1"><i class="fa fa-check"></i><b>5.2.1</b> Simple logistic model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#binary-binary-interaction-gender-country"><i class="fa fa-check"></i><b>5.3</b> 2. Binary × Binary interaction (gender × country)</a></li>
+<li class="chapter" data-level="5.4" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#binary-continuous-interaction-gender-age-1"><i class="fa fa-check"></i><b>5.4</b> 3. Binary × Continuous interaction (gender × age)</a></li>
+<li class="chapter" data-level="5.5" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#continuous-continuous-interaction-age-education"><i class="fa fa-check"></i><b>5.5</b> 4. Continuous × Continuous interaction (age × education)</a></li>
+<li class="chapter" data-level="5.6" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#three-way-interaction-gender-age-country-1"><i class="fa fa-check"></i><b>5.6</b> 5. Three-way interaction (gender × age × country)</a></li>
+<li class="chapter" data-level="5.7" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#marginal-effects-and-interpretation"><i class="fa fa-check"></i><b>5.7</b> 6. Marginal effects and interpretation</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#ames-and-focal-contrasts"><i class="fa fa-check"></i><b>5.7.1</b> AMEs and focal contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#problem-set-logistic-regression-practice"><i class="fa fa-check"></i><b>5.8</b> Problem set — Logistic regression practice</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html"><i class="fa fa-check"></i><b>6</b> Country effects — fixed effects and multilevel modeling</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#country-fixed-effects-logit-with-dummies"><i class="fa fa-check"></i><b>6.1</b> 1. Country fixed effects (logit with dummies)</a></li>
+<li class="chapter" data-level="6.2" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#multilevel-logistic-model-random-intercepts-by-country"><i class="fa fa-check"></i><b>6.2</b> 2. Multilevel logistic model (random intercepts by country)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#country-predictions-fixed-vs-multilevel"><i class="fa fa-check"></i><b>6.2.1</b> Country predictions: fixed vs multilevel</a></li>
+<li class="chapter" data-level="6.2.2" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#visualizing-country-intercepts-shrinkage"><i class="fa fa-check"></i><b>6.2.2</b> Visualizing country intercepts (shrinkage)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#random-slopes-for-gender-optional-extension"><i class="fa fa-check"></i><b>6.3</b> 3. Random slopes for gender (optional extension)</a></li>
+<li class="chapter" data-level="6.4" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#practice-prompts"><i class="fa fa-check"></i><b>6.4</b> Practice prompts</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html"><i class="fa fa-check"></i><b>7</b> Survey weighting — why and how</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#what-these-design-variables-mean-plain-language"><i class="fa fa-check"></i><b>7.0.1</b> What these design variables mean (plain language)</a></li>
+<li class="chapter" data-level="7.1" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#weighted-descriptive-estimates"><i class="fa fa-check"></i><b>7.1</b> 1. Weighted descriptive estimates</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#country-weighted-proportions"><i class="fa fa-check"></i><b>7.1.1</b> Country-weighted proportions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#weighted-regression-linear-probability-and-logit"><i class="fa fa-check"></i><b>7.2</b> 2. Weighted regression: linear probability and logit</a></li>
+<li class="chapter" data-level="7.3" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#when-to-weight-practical-guidance"><i class="fa fa-check"></i><b>7.3</b> 3. When to weight (practical guidance)</a></li>
+<li class="chapter" data-level="7.4" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#small-worked-example-weighted-marginal-effect-of-age"><i class="fa fa-check"></i><b>7.4</b> 4. Small worked example: weighted marginal effect of age</a></li>
+<li class="chapter" data-level="7.5" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#practice-prompts-1"><i class="fa fa-check"></i><b>7.5</b> Practice prompts</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="appendix-data-and-build-notes.html"><a href="appendix-data-and-build-notes.html"><i class="fa fa-check"></i><b>8</b> Appendix — Data and build notes</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="appendix-data-and-build-notes.html"><a href="appendix-data-and-build-notes.html#ess-subset"><i class="fa fa-check"></i><b>8.1</b> ESS subset</a></li>
+<li class="chapter" data-level="8.2" data-path="appendix-data-and-build-notes.html"><a href="appendix-data-and-build-notes.html#extending-the-material"><i class="fa fa-check"></i><b>8.2</b> Extending the material</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">RECSM: Quantitative Methods in Social Research</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="day-1-describing-the-ess-sample" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Day 1 — Describing the ESS sample<a href="day-1-describing-the-ess-sample.html#day-1-describing-the-ess-sample" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Goal: practice measurement levels, univariate summaries, and basic visualisations using the ESS subset (GB, DE, FR).</p>
+<div id="variables-we-use" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Variables we use<a href="day-1-describing-the-ess-sample.html#variables-we-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><code>ppltrst</code> (0–10): generalised social trust (higher = more trust)</li>
+<li><code>agea</code>: age in years</li>
+<li><code>gndr</code>: 1 = male, 2 = female (other codes = missing)</li>
+<li><code>nwsptot</code>: days per week reading newspapers (0–7; 66/77/88/99 = missing)</li>
+<li><code>netustm</code>: minutes per day on the internet</li>
+<li><code>domicil</code>: 1 big city … 5 farm/countryside</li>
+<li><code>cntry</code>: GB, DE, FR</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="day-1-describing-the-ess-sample.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="day-1-describing-the-ess-sample.html#cb3-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-3"><a href="day-1-describing-the-ess-sample.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="day-1-describing-the-ess-sample.html#cb3-4" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">clean_ess</span>()</span></code></pre></div>
+</div>
+<div id="measurement-checks" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Measurement checks<a href="day-1-describing-the-ess-sample.html#measurement-checks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><code>ppltrst</code> and <code>agea</code>: interval/ratio (mean and sd are fine).</li>
+<li><code>nwsptot</code>, <code>netustm</code>: count-like; treat as interval for summaries but plot distributions.</li>
+<li><code>domicil</code>: ordered categorical (use medians/percentiles).</li>
+<li><code>gndr</code>: binary factor.</li>
+</ul>
+</div>
+<div id="from-description-to-inference" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> From description to inference<a href="day-1-describing-the-ess-sample.html#from-description-to-inference" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>Descriptive vs causal inference:</strong> describing “what is” (population levels, group gaps) vs “why” (causal claims require design/identification). Today we stay descriptive but prep for causal thinking.</li>
+<li><strong>Sampling model:</strong> estimates come from a sample → always uncertainty. Sampling distributions tell us how much an estimator would vary across repeated samples.</li>
+<li><strong>CLT intuition:</strong> for many statistics (like the mean), repeated samples stack up in an approximately normal bell curve as <em>n</em> grows; this justifies SEs, CIs, and t-tests.</li>
+<li><strong>Hypothesis testing basics:</strong> state H0/HA, pick a test statistic, get a p-value, draw a conclusion while minding Type I (false positive) and Type II (false negative) risks.</li>
+</ul>
+</div>
+<div id="distributions-and-where-centre-matters" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Distributions and where centre matters<a href="day-1-describing-the-ess-sample.html#distributions-and-where-centre-matters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>Central tendency:</strong> use mean for roughly symmetric interval data (e.g., <code>ppltrst</code>), median for skewed or count-like data (e.g., <code>nwsptot</code>), and mode/proportions for categorical (<code>gndr</code>, <code>domicil</code>).</li>
+<li><strong>Shapes to look for:</strong> symmetry vs. skew, heavy tails, spikes at 0, and multimodality. Use density/Histogram to diagnose before choosing a summary.</li>
+<li><strong>Robustness:</strong> median and IQR resist outliers; mean and SD are more efficient when the distribution is near normal.</li>
+</ul>
+<div id="quick-distribution-gallery" class="section level3 tabset hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Quick distribution gallery<a href="day-1-describing-the-ess-sample.html#quick-distribution-gallery" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code" class="section level4 hasAnchor" number="3.4.1.1">
+<h4><span class="header-section-number">3.4.1.1</span> Code<a href="day-1-describing-the-ess-sample.html#code" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="day-1-describing-the-ess-sample.html#cb4-1" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">clean_ess</span>()</span>
+<span id="cb4-2"><a href="day-1-describing-the-ess-sample.html#cb4-2" tabindex="-1"></a>hist_trust <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ess, <span class="fu">aes</span>(<span class="at">x =</span> ppltrst)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">&quot;#4C78A8&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="day-1-describing-the-ess-sample.html#cb4-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Trust (0-10)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span>
+<span id="cb4-4"><a href="day-1-describing-the-ess-sample.html#cb4-4" tabindex="-1"></a>hist_news  <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ess, <span class="fu">aes</span>(<span class="at">x =</span> nwsptot)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">fill =</span> <span class="st">&quot;#F58518&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="day-1-describing-the-ess-sample.html#cb4-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;News days per week&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span>
+<span id="cb4-6"><a href="day-1-describing-the-ess-sample.html#cb4-6" tabindex="-1"></a>hist_net   <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ess, <span class="fu">aes</span>(<span class="at">x =</span> netustm)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">60</span>, <span class="at">fill =</span> <span class="st">&quot;#54A24B&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="day-1-describing-the-ess-sample.html#cb4-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Internet minutes/day&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+</div>
+<div id="output" class="section level4 hasAnchor" number="3.4.1.2">
+<h4><span class="header-section-number">3.4.1.2</span> Output<a href="day-1-describing-the-ess-sample.html#output" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="02-descriptive-ess_files/figure-html/dist-out-1.png" width="672" /><img src="02-descriptive-ess_files/figure-html/dist-out-2.png" width="672" /><img src="02-descriptive-ess_files/figure-html/dist-out-3.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="problem-set-a-univariate-summaries" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Problem set A — Univariate summaries<a href="day-1-describing-the-ess-sample.html#problem-set-a-univariate-summaries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Compute mean, median, variance, and IQR for <code>ppltrst</code>, <code>nwsptot</code>, and <code>netustm</code> for each country.</li>
+<li>Plot histograms (or density plots) of <code>ppltrst</code> by country; compare centres and spread.</li>
+<li>Produce a table of counts and proportions for <code>gndr</code> and <code>domicil</code> by country.</li>
+</ol>
+<div id="worked-example-a" class="section level3 tabset hasAnchor" number="3.5.1">
+<h3><span class="header-section-number">3.5.1</span> Worked example A<a href="day-1-describing-the-ess-sample.html#worked-example-a" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-1" class="section level4 hasAnchor" number="3.5.1.1">
+<h4><span class="header-section-number">3.5.1.1</span> Code<a href="day-1-describing-the-ess-sample.html#code-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="day-1-describing-the-ess-sample.html#cb5-1" tabindex="-1"></a><span class="co"># code only (not executed in this tab)</span></span>
+<span id="cb5-2"><a href="day-1-describing-the-ess-sample.html#cb5-2" tabindex="-1"></a>summary_tbl <span class="ot">&lt;-</span> ess <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="day-1-describing-the-ess-sample.html#cb5-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cntry) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="day-1-describing-the-ess-sample.html#cb5-4" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-5"><a href="day-1-describing-the-ess-sample.html#cb5-5" tabindex="-1"></a>    <span class="at">trust_mean =</span> <span class="fu">mean</span>(ppltrst, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a href="day-1-describing-the-ess-sample.html#cb5-6" tabindex="-1"></a>    <span class="at">trust_sd   =</span> <span class="fu">sd</span>(ppltrst, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="day-1-describing-the-ess-sample.html#cb5-7" tabindex="-1"></a>    <span class="at">news_med   =</span> <span class="fu">median</span>(nwsptot, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-8"><a href="day-1-describing-the-ess-sample.html#cb5-8" tabindex="-1"></a>    <span class="at">news_iqr   =</span> <span class="fu">IQR</span>(nwsptot, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-9"><a href="day-1-describing-the-ess-sample.html#cb5-9" tabindex="-1"></a>    <span class="at">net_mean   =</span> <span class="fu">mean</span>(netustm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-10"><a href="day-1-describing-the-ess-sample.html#cb5-10" tabindex="-1"></a>    <span class="at">net_sd     =</span> <span class="fu">sd</span>(netustm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-11"><a href="day-1-describing-the-ess-sample.html#cb5-11" tabindex="-1"></a>  )</span>
+<span id="cb5-12"><a href="day-1-describing-the-ess-sample.html#cb5-12" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="day-1-describing-the-ess-sample.html#cb5-13" tabindex="-1"></a>trust_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ess, <span class="fu">aes</span>(<span class="at">x =</span> ppltrst, <span class="at">fill =</span> cntry)) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="day-1-describing-the-ess-sample.html#cb5-14" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="day-1-describing-the-ess-sample.html#cb5-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Social trust (0-10)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Country&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-16"><a href="day-1-describing-the-ess-sample.html#cb5-16" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb5-17"><a href="day-1-describing-the-ess-sample.html#cb5-17" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="day-1-describing-the-ess-sample.html#cb5-18" tabindex="-1"></a>counts <span class="ot">&lt;-</span> ess <span class="sc">|&gt;</span></span>
+<span id="cb5-19"><a href="day-1-describing-the-ess-sample.html#cb5-19" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dom_group =</span> <span class="fu">factor</span>(domicil, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb5-20"><a href="day-1-describing-the-ess-sample.html#cb5-20" tabindex="-1"></a>                            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Big city&quot;</span>,<span class="st">&quot;Suburbs&quot;</span>,<span class="st">&quot;Town&quot;</span>,<span class="st">&quot;Village&quot;</span>,<span class="st">&quot;Farm&quot;</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb5-21"><a href="day-1-describing-the-ess-sample.html#cb5-21" tabindex="-1"></a>  <span class="fu">count</span>(cntry, gender, dom_group, <span class="at">name =</span> <span class="st">&quot;n&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-22"><a href="day-1-describing-the-ess-sample.html#cb5-22" tabindex="-1"></a>  <span class="fu">group_by</span>(cntry) <span class="sc">|&gt;</span></span>
+<span id="cb5-23"><a href="day-1-describing-the-ess-sample.html#cb5-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n))</span></code></pre></div>
+</div>
+<div id="output-1" class="section level4 hasAnchor" number="3.5.1.2">
+<h4><span class="header-section-number">3.5.1.2</span> Output<a href="day-1-describing-the-ess-sample.html#output-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 3 × 7
+##   cntry trust_mean trust_sd news_med news_iqr net_mean net_sd
+##   &lt;chr&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+## 1 DE          4.90     2.40        1        1    1322.  2417.
+## 2 FR          4.53     2.18        1        2    1754.  2771.
+## 3 GB          5.31     2.22        1        2    1539.  2581.</code></pre>
+<p><img src="02-descriptive-ess_files/figure-html/psA-output-1.png" width="672" /></p>
+<pre><code>## # A tibble: 43 × 5
+## # Groups:   cntry [3]
+##    cntry gender dom_group     n    prop
+##    &lt;chr&gt; &lt;chr&gt;  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;
+##  1 DE    Female Big city   3212 0.0872 
+##  2 DE    Female Suburbs    2442 0.0663 
+##  3 DE    Female Town       6723 0.182  
+##  4 DE    Female Village    5354 0.145  
+##  5 DE    Female Farm        391 0.0106 
+##  6 DE    Female &lt;NA&gt;         86 0.00233
+##  7 DE    Male   Big city   3144 0.0853 
+##  8 DE    Male   Suburbs    2396 0.0650 
+##  9 DE    Male   Town       6475 0.176  
+## 10 DE    Male   Village    5739 0.156  
+## # ℹ 33 more rows</code></pre>
+</div>
+</div>
+</div>
+<div id="problem-set-b-bivariate-exploration" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Problem set B — Bivariate exploration<a href="day-1-describing-the-ess-sample.html#problem-set-b-bivariate-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Correlate <code>ppltrst</code> with <code>agea</code> overall and by country. Does trust rise or fall with age?</li>
+<li>Create side-by-side boxplots of <code>ppltrst</code> by <code>gender</code> within each country.</li>
+<li>Compute the difference in mean <code>ppltrst</code> between genders; provide 95% confidence intervals using a t-test.</li>
+<li>Produce a country-by-gender table of median <code>nwsptot</code>.</li>
+</ol>
+<div id="worked-example-b" class="section level3 tabset hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Worked example B<a href="day-1-describing-the-ess-sample.html#worked-example-b" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-2" class="section level4 hasAnchor" number="3.6.1.1">
+<h4><span class="header-section-number">3.6.1.1</span> Code<a href="day-1-describing-the-ess-sample.html#code-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="day-1-describing-the-ess-sample.html#cb8-1" tabindex="-1"></a><span class="co"># code only (not executed in this tab)</span></span>
+<span id="cb8-2"><a href="day-1-describing-the-ess-sample.html#cb8-2" tabindex="-1"></a>cor_age_trust <span class="ot">&lt;-</span> ess <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="day-1-describing-the-ess-sample.html#cb8-3" tabindex="-1"></a>  <span class="fu">group_by</span>(cntry) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="day-1-describing-the-ess-sample.html#cb8-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">corr =</span> <span class="fu">cor</span>(ppltrst, agea, <span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>))</span>
+<span id="cb8-5"><a href="day-1-describing-the-ess-sample.html#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="day-1-describing-the-ess-sample.html#cb8-6" tabindex="-1"></a>boxplot_trust <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ess, <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> ppltrst, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="day-1-describing-the-ess-sample.html#cb8-7" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="day-1-describing-the-ess-sample.html#cb8-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cntry) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="day-1-describing-the-ess-sample.html#cb8-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">&quot;Social trust&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="day-1-describing-the-ess-sample.html#cb8-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-11"><a href="day-1-describing-the-ess-sample.html#cb8-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb8-12"><a href="day-1-describing-the-ess-sample.html#cb8-12" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="day-1-describing-the-ess-sample.html#cb8-13" tabindex="-1"></a><span class="co"># difference in means with CI</span></span>
+<span id="cb8-14"><a href="day-1-describing-the-ess-sample.html#cb8-14" tabindex="-1"></a>trust_ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(ppltrst <span class="sc">~</span> gender, <span class="at">data =</span> ess)</span></code></pre></div>
+</div>
+<div id="output-2" class="section level4 hasAnchor" number="3.6.1.2">
+<h4><span class="header-section-number">3.6.1.2</span> Output<a href="day-1-describing-the-ess-sample.html#output-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 3 × 2
+##   cntry     corr
+##   &lt;chr&gt;    &lt;dbl&gt;
+## 1 DE     0.00129
+## 2 FR    -0.0291 
+## 3 GB     0.0782</code></pre>
+<p><img src="02-descriptive-ess_files/figure-html/psB-output-1.png" width="672" /></p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  ppltrst by gender
+## t = -6.3769, df = 79520, p-value = 1.817e-10
+## alternative hypothesis: true difference in means between group Female and group Male is not equal to 0
+## 95 percent confidence interval:
+##  -0.13604975 -0.07207948
+## sample estimates:
+## mean in group Female   mean in group Male 
+##             4.870032             4.974096</code></pre>
+</div>
+</div>
+</div>
+<div id="hypothesis-testing-quick-start" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Hypothesis testing quick-start<a href="day-1-describing-the-ess-sample.html#hypothesis-testing-quick-start" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Two worked examples to introduce formal testing on Day 1.</p>
+<div id="example-1-two-sample-t-test-mean-trust-by-gender" class="section level3 tabset hasAnchor" number="3.7.1">
+<h3><span class="header-section-number">3.7.1</span> Example 1: Two-sample t-test (mean trust by gender)<a href="day-1-describing-the-ess-sample.html#example-1-two-sample-t-test-mean-trust-by-gender" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-3" class="section level4 hasAnchor" number="3.7.1.1">
+<h4><span class="header-section-number">3.7.1.1</span> Code<a href="day-1-describing-the-ess-sample.html#code-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="day-1-describing-the-ess-sample.html#cb11-1" tabindex="-1"></a>t_gender <span class="ot">&lt;-</span> <span class="fu">t.test</span>(ppltrst <span class="sc">~</span> gender, <span class="at">data =</span> ess)</span></code></pre></div>
+</div>
+<div id="output-3" class="section level4 hasAnchor" number="3.7.1.2">
+<h4><span class="header-section-number">3.7.1.2</span> Output<a href="day-1-describing-the-ess-sample.html#output-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  ppltrst by gender
+## t = -6.3769, df = 79520, p-value = 1.817e-10
+## alternative hypothesis: true difference in means between group Female and group Male is not equal to 0
+## 95 percent confidence interval:
+##  -0.13604975 -0.07207948
+## sample estimates:
+## mean in group Female   mean in group Male 
+##             4.870032             4.974096</code></pre>
+<p>Interpretation: If the p-value &lt; 0.05, we reject equal mean trust between men and women. The 95% CI shows the plausible range of the mean difference (Female − Male); if it excludes 0, the gap is statistically significant.</p>
+</div>
+</div>
+<div id="example-2-chi-squared-test-gender-regular-news-readership" class="section level3 tabset hasAnchor" number="3.7.2">
+<h3><span class="header-section-number">3.7.2</span> Example 2: Chi-squared test (gender × regular news readership)<a href="day-1-describing-the-ess-sample.html#example-2-chi-squared-test-gender-regular-news-readership" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-4" class="section level4 hasAnchor" number="3.7.2.1">
+<h4><span class="header-section-number">3.7.2.1</span> Code<a href="day-1-describing-the-ess-sample.html#code-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="day-1-describing-the-ess-sample.html#cb13-1" tabindex="-1"></a>ess <span class="ot">&lt;-</span> ess <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="day-1-describing-the-ess-sample.html#cb13-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">news_regular =</span> <span class="fu">ifelse</span>(nwsptot <span class="sc">&gt;=</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="sc">!</span>nwsptot <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">66</span>,<span class="dv">77</span>,<span class="dv">88</span>,<span class="dv">99</span>), <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb13-3"><a href="day-1-describing-the-ess-sample.html#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="day-1-describing-the-ess-sample.html#cb13-4" tabindex="-1"></a>tab_news <span class="ot">&lt;-</span> <span class="fu">table</span>(ess<span class="sc">$</span>gender, ess<span class="sc">$</span>news_regular, <span class="at">useNA =</span> <span class="st">&quot;no&quot;</span>)</span>
+<span id="cb13-5"><a href="day-1-describing-the-ess-sample.html#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="day-1-describing-the-ess-sample.html#cb13-6" tabindex="-1"></a>chi_news <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tab_news)</span></code></pre></div>
+</div>
+<div id="output-4" class="section level4 hasAnchor" number="3.7.2.2">
+<h4><span class="header-section-number">3.7.2.2</span> Output<a href="day-1-describing-the-ess-sample.html#output-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>##         
+##              0     1
+##   Female 16142  2086
+##   Male   13917  2532</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  tab_news
+## X-squared = 116.47, df = 1, p-value &lt; 2.2e-16</code></pre>
+<p>Interpretation: A small p-value means the share of regular news readers differs by gender (variables not independent). Report the chi-squared statistic, degrees of freedom, and p-value.</p>
+</div>
+</div>
+</div>
+<div id="reflection-prompts" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Reflection prompts<a href="day-1-describing-the-ess-sample.html#reflection-prompts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Which variables are most skewed? How does that affect your choice of centre and spread?</li>
+<li>Are gender gaps in trust consistent across GB, DE, and FR?</li>
+<li>If <code>nwsptot</code> has many zeros, is median more informative than mean?</li>
+</ul>
+<p>Use these as warm-ups before moving into regression modeling in the next chapter.</p>
+</div>
+<div id="sampling-distributions-by-simulation" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> Sampling distributions by simulation<a href="day-1-describing-the-ess-sample.html#sampling-distributions-by-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Central-limit intuition: as sample size grows, the sampling distribution of the mean tightens and approaches normality, even for skewed variables.</p>
+<div id="simulating-sample-means-of-trust" class="section level3 tabset hasAnchor" number="3.9.1">
+<h3><span class="header-section-number">3.9.1</span> Simulating sample means of trust<a href="day-1-describing-the-ess-sample.html#simulating-sample-means-of-trust" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-5" class="section level4 hasAnchor" number="3.9.1.1">
+<h4><span class="header-section-number">3.9.1.1</span> Code<a href="day-1-describing-the-ess-sample.html#code-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="day-1-describing-the-ess-sample.html#cb16-1" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">clean_ess</span>()</span>
+<span id="cb16-2"><a href="day-1-describing-the-ess-sample.html#cb16-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb16-3"><a href="day-1-describing-the-ess-sample.html#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="day-1-describing-the-ess-sample.html#cb16-4" tabindex="-1"></a>draw_means <span class="ot">&lt;-</span> <span class="cf">function</span>(var, n, <span class="at">reps =</span> <span class="dv">2000</span>) {</span>
+<span id="cb16-5"><a href="day-1-describing-the-ess-sample.html#cb16-5" tabindex="-1"></a>  vals <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(var)</span>
+<span id="cb16-6"><a href="day-1-describing-the-ess-sample.html#cb16-6" tabindex="-1"></a>  <span class="fu">replicate</span>(reps, <span class="fu">mean</span>(<span class="fu">sample</span>(vals, n, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb16-7"><a href="day-1-describing-the-ess-sample.html#cb16-7" tabindex="-1"></a>}</span>
+<span id="cb16-8"><a href="day-1-describing-the-ess-sample.html#cb16-8" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="day-1-describing-the-ess-sample.html#cb16-9" tabindex="-1"></a>means_n10  <span class="ot">&lt;-</span> <span class="fu">draw_means</span>(ess<span class="sc">$</span>ppltrst, <span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb16-10"><a href="day-1-describing-the-ess-sample.html#cb16-10" tabindex="-1"></a>means_n50  <span class="ot">&lt;-</span> <span class="fu">draw_means</span>(ess<span class="sc">$</span>ppltrst, <span class="at">n =</span> <span class="dv">50</span>)</span>
+<span id="cb16-11"><a href="day-1-describing-the-ess-sample.html#cb16-11" tabindex="-1"></a>means_n200 <span class="ot">&lt;-</span> <span class="fu">draw_means</span>(ess<span class="sc">$</span>ppltrst, <span class="at">n =</span> <span class="dv">200</span>)</span></code></pre></div>
+</div>
+<div id="output-5" class="section level4 hasAnchor" number="3.9.1.2">
+<h4><span class="header-section-number">3.9.1.2</span> Output<a href="day-1-describing-the-ess-sample.html#output-5" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="02-descriptive-ess_files/figure-html/sim-out-1.png" width="672" /></p>
+<p>Interpretation: as n grows, the sampling distribution centers near the population mean and variance shrinks; this motivates using standard errors when reporting estimates.</p>
+</div>
+</div>
+</div>
+<div id="hypothesis-testing-recap-slides-practice" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> Hypothesis testing recap (slides → practice)<a href="day-1-describing-the-ess-sample.html#hypothesis-testing-recap-slides-practice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>T-tests</strong> compare means using the t distribution (fatter tails for small <em>n</em>); for two groups assume equal variances or use Welch when in doubt.</li>
+<li><strong>Chi-squared</strong> tests independence in contingency tables.</li>
+<li><strong>Errors:</strong> α = P(Type I), β = P(Type II); lowering α raises β. Report p-values <em>and</em> confidence intervals to show effect size and uncertainty.</li>
+<li><strong>Confidence intervals:</strong> estimate ± (critical value × SE); if 95% CI excludes 0 (for mean differences), the two-sided test at α = 0.05 would reject H0.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="getting-ready.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="day-2-linear-regression-with-interaction-effects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

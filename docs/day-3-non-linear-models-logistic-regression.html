@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Day 3 — Non-linear models: logistic regression | RECSM: Quantitative Methods in Social Research</title>
+  <meta name="description" content="Chapter 5 Day 3 — Non-linear models: logistic regression | RECSM: Quantitative Methods in Social Research" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Day 3 — Non-linear models: logistic regression | RECSM: Quantitative Methods in Social Research" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Day 3 — Non-linear models: logistic regression | RECSM: Quantitative Methods in Social Research" />
+  
+  
+  
+
+<meta name="author" content="Burak Sonmez" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="day-2-linear-regression-with-interaction-effects.html"/>
+<link rel="next" href="country-effects-fixed-effects-and-multilevel-modeling.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="getting-ready.html"><a href="getting-ready.html"><i class="fa fa-check"></i><b>2</b> Getting Ready</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-ready.html"><a href="getting-ready.html#install-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Install R and RStudio</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-ready.html"><a href="getting-ready.html#folder-structure"><i class="fa fa-check"></i><b>2.2</b> Folder structure</a></li>
+<li class="chapter" data-level="2.3" data-path="getting-ready.html"><a href="getting-ready.html#load-the-ess-data-once"><i class="fa fa-check"></i><b>2.3</b> Load the ESS data once</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html"><i class="fa fa-check"></i><b>3</b> Day 1 — Describing the ESS sample</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#variables-we-use"><i class="fa fa-check"></i><b>3.1</b> Variables we use</a></li>
+<li class="chapter" data-level="3.2" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#measurement-checks"><i class="fa fa-check"></i><b>3.2</b> Measurement checks</a></li>
+<li class="chapter" data-level="3.3" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#from-description-to-inference"><i class="fa fa-check"></i><b>3.3</b> From description to inference</a></li>
+<li class="chapter" data-level="3.4" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#distributions-and-where-centre-matters"><i class="fa fa-check"></i><b>3.4</b> Distributions and where centre matters</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#quick-distribution-gallery"><i class="fa fa-check"></i><b>3.4.1</b> Quick distribution gallery</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#problem-set-a-univariate-summaries"><i class="fa fa-check"></i><b>3.5</b> Problem set A — Univariate summaries</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#worked-example-a"><i class="fa fa-check"></i><b>3.5.1</b> Worked example A</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#problem-set-b-bivariate-exploration"><i class="fa fa-check"></i><b>3.6</b> Problem set B — Bivariate exploration</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#worked-example-b"><i class="fa fa-check"></i><b>3.6.1</b> Worked example B</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#hypothesis-testing-quick-start"><i class="fa fa-check"></i><b>3.7</b> Hypothesis testing quick-start</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#example-1-two-sample-t-test-mean-trust-by-gender"><i class="fa fa-check"></i><b>3.7.1</b> Example 1: Two-sample t-test (mean trust by gender)</a></li>
+<li class="chapter" data-level="3.7.2" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#example-2-chi-squared-test-gender-regular-news-readership"><i class="fa fa-check"></i><b>3.7.2</b> Example 2: Chi-squared test (gender × regular news readership)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#reflection-prompts"><i class="fa fa-check"></i><b>3.8</b> Reflection prompts</a></li>
+<li class="chapter" data-level="3.9" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#sampling-distributions-by-simulation"><i class="fa fa-check"></i><b>3.9</b> Sampling distributions by simulation</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#simulating-sample-means-of-trust"><i class="fa fa-check"></i><b>3.9.1</b> Simulating sample means of trust</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="day-1-describing-the-ess-sample.html"><a href="day-1-describing-the-ess-sample.html#hypothesis-testing-recap-slides-practice"><i class="fa fa-check"></i><b>3.10</b> Hypothesis testing recap (slides → practice)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html"><i class="fa fa-check"></i><b>4</b> Day 2 — Linear regression with interaction effects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#ols-intuition-best-fit-line-and-residuals"><i class="fa fa-check"></i><b>4.1</b> OLS intuition: best-fit line and residuals</a></li>
+<li class="chapter" data-level="4.2" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#baseline-linear-model"><i class="fa fa-check"></i><b>4.2</b> 1. Baseline linear model</a></li>
+<li class="chapter" data-level="4.3" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#binary-binary-interaction-gender-urban"><i class="fa fa-check"></i><b>4.3</b> 2. Binary × Binary interaction (gender × urban)</a></li>
+<li class="chapter" data-level="4.4" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#binary-continuous-interaction-gender-age"><i class="fa fa-check"></i><b>4.4</b> 3. Binary × Continuous interaction (gender × age)</a></li>
+<li class="chapter" data-level="4.5" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#continuous-continuous-interaction-age-news-consumption"><i class="fa fa-check"></i><b>4.5</b> 4. Continuous × Continuous interaction (age × news consumption)</a></li>
+<li class="chapter" data-level="4.6" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#three-way-interaction-gender-age-country"><i class="fa fa-check"></i><b>4.6</b> 5. Three-way interaction (gender × age × country)</a></li>
+<li class="chapter" data-level="4.7" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#model-comparison-and-diagnostics"><i class="fa fa-check"></i><b>4.7</b> 6. Model comparison and diagnostics</a></li>
+<li class="chapter" data-level="4.8" data-path="day-2-linear-regression-with-interaction-effects.html"><a href="day-2-linear-regression-with-interaction-effects.html#problem-set-interaction-lab"><i class="fa fa-check"></i><b>4.8</b> Problem set — Interaction lab</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html"><i class="fa fa-check"></i><b>5</b> Day 3 — Non-linear models: logistic regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#linear-probability-model-lpm-first"><i class="fa fa-check"></i><b>5.1</b> 0. Linear probability model (LPM) first</a></li>
+<li class="chapter" data-level="5.2" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#simple-logistic-model"><i class="fa fa-check"></i><b>5.2</b> 1. Simple logistic model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#simple-logistic-model-1"><i class="fa fa-check"></i><b>5.2.1</b> Simple logistic model</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#binary-binary-interaction-gender-country"><i class="fa fa-check"></i><b>5.3</b> 2. Binary × Binary interaction (gender × country)</a></li>
+<li class="chapter" data-level="5.4" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#binary-continuous-interaction-gender-age-1"><i class="fa fa-check"></i><b>5.4</b> 3. Binary × Continuous interaction (gender × age)</a></li>
+<li class="chapter" data-level="5.5" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#continuous-continuous-interaction-age-education"><i class="fa fa-check"></i><b>5.5</b> 4. Continuous × Continuous interaction (age × education)</a></li>
+<li class="chapter" data-level="5.6" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#three-way-interaction-gender-age-country-1"><i class="fa fa-check"></i><b>5.6</b> 5. Three-way interaction (gender × age × country)</a></li>
+<li class="chapter" data-level="5.7" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#marginal-effects-and-interpretation"><i class="fa fa-check"></i><b>5.7</b> 6. Marginal effects and interpretation</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#ames-and-focal-contrasts"><i class="fa fa-check"></i><b>5.7.1</b> AMEs and focal contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="day-3-non-linear-models-logistic-regression.html"><a href="day-3-non-linear-models-logistic-regression.html#problem-set-logistic-regression-practice"><i class="fa fa-check"></i><b>5.8</b> Problem set — Logistic regression practice</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html"><i class="fa fa-check"></i><b>6</b> Country effects — fixed effects and multilevel modeling</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#country-fixed-effects-logit-with-dummies"><i class="fa fa-check"></i><b>6.1</b> 1. Country fixed effects (logit with dummies)</a></li>
+<li class="chapter" data-level="6.2" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#multilevel-logistic-model-random-intercepts-by-country"><i class="fa fa-check"></i><b>6.2</b> 2. Multilevel logistic model (random intercepts by country)</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#country-predictions-fixed-vs-multilevel"><i class="fa fa-check"></i><b>6.2.1</b> Country predictions: fixed vs multilevel</a></li>
+<li class="chapter" data-level="6.2.2" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#visualizing-country-intercepts-shrinkage"><i class="fa fa-check"></i><b>6.2.2</b> Visualizing country intercepts (shrinkage)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#random-slopes-for-gender-optional-extension"><i class="fa fa-check"></i><b>6.3</b> 3. Random slopes for gender (optional extension)</a></li>
+<li class="chapter" data-level="6.4" data-path="country-effects-fixed-effects-and-multilevel-modeling.html"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#practice-prompts"><i class="fa fa-check"></i><b>6.4</b> Practice prompts</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html"><i class="fa fa-check"></i><b>7</b> Survey weighting — why and how</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#what-these-design-variables-mean-plain-language"><i class="fa fa-check"></i><b>7.0.1</b> What these design variables mean (plain language)</a></li>
+<li class="chapter" data-level="7.1" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#weighted-descriptive-estimates"><i class="fa fa-check"></i><b>7.1</b> 1. Weighted descriptive estimates</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#country-weighted-proportions"><i class="fa fa-check"></i><b>7.1.1</b> Country-weighted proportions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#weighted-regression-linear-probability-and-logit"><i class="fa fa-check"></i><b>7.2</b> 2. Weighted regression: linear probability and logit</a></li>
+<li class="chapter" data-level="7.3" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#when-to-weight-practical-guidance"><i class="fa fa-check"></i><b>7.3</b> 3. When to weight (practical guidance)</a></li>
+<li class="chapter" data-level="7.4" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#small-worked-example-weighted-marginal-effect-of-age"><i class="fa fa-check"></i><b>7.4</b> 4. Small worked example: weighted marginal effect of age</a></li>
+<li class="chapter" data-level="7.5" data-path="survey-weighting-why-and-how.html"><a href="survey-weighting-why-and-how.html#practice-prompts-1"><i class="fa fa-check"></i><b>7.5</b> Practice prompts</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="appendix-data-and-build-notes.html"><a href="appendix-data-and-build-notes.html"><i class="fa fa-check"></i><b>8</b> Appendix — Data and build notes</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="appendix-data-and-build-notes.html"><a href="appendix-data-and-build-notes.html#ess-subset"><i class="fa fa-check"></i><b>8.1</b> ESS subset</a></li>
+<li class="chapter" data-level="8.2" data-path="appendix-data-and-build-notes.html"><a href="appendix-data-and-build-notes.html#extending-the-material"><i class="fa fa-check"></i><b>8.2</b> Extending the material</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">RECSM: Quantitative Methods in Social Research</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="day-3-non-linear-models-logistic-regression" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Day 3 — Non-linear models: logistic regression<a href="day-3-non-linear-models-logistic-regression.html#day-3-non-linear-models-logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>We now model binary outcomes. This replaces the old factor-analysis/PCA content and links three specifications:</p>
+<ul>
+<li><strong>Linear probability model (LPM):</strong> <span class="math inline">\(Y_i \in \{0,1\},\ \mathbb{E}[Y_i\mid X_i]=X_i\beta\)</span> (identity link).</li>
+<li><strong>Logit:</strong> <span class="math inline">\(p_i = \Pr(Y_i=1\mid X_i)=\operatorname{logit}^{-1}(X_i\beta)=\frac{e^{X_i\beta}}{1+e^{X_i\beta}}\)</span>.</li>
+<li><strong>Marginal effects:</strong> <span class="math inline">\(\frac{\partial p_i}{\partial x_{ik}} = p_i(1-p_i)\beta_k\)</span>, highlighting how effects vary with the baseline probability.</li>
+<li><strong>Interaction in logit:</strong> For <span class="math inline">\(p_i = \operatorname{logit}^{-1}(\eta_i)\)</span> with <span class="math inline">\(\eta_i = \beta_0 + \beta_1 x + \beta_2 z + \beta_3 xz\)</span>, the cross-partial effect is <span class="math inline">\(\frac{\partial^2 p_i}{\partial x\,\partial z} = p_i(1-p_i)(1-2p_i)\beta_1\beta_2 + p_i(1-p_i)\beta_3\)</span>; sign can vary with <span class="math inline">\(p_i\)</span>.</li>
+</ul>
+<p><strong>Outcome</strong>: <code>news_regular</code> = 1 if a respondent reads newspapers on at least 3 days per week (<code>nwsptot &gt;= 3</code>), 0 otherwise.</p>
+<p><strong>Predictors</strong>: age (<code>agea</code>), gender (<code>gndr</code>), country (<code>cntry</code>), education (<code>eduyrs</code>), and their interactions.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="day-3-non-linear-models-logistic-regression.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb29-2"><a href="day-3-non-linear-models-logistic-regression.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb29-3"><a href="day-3-non-linear-models-logistic-regression.html#cb29-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-4"><a href="day-3-non-linear-models-logistic-regression.html#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="day-3-non-linear-models-logistic-regression.html#cb29-5" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;R/clean_ess.R&quot;</span>)</span>
+<span id="cb29-6"><a href="day-3-non-linear-models-logistic-regression.html#cb29-6" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="day-3-non-linear-models-logistic-regression.html#cb29-7" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">clean_ess</span>()</span>
+<span id="cb29-8"><a href="day-3-non-linear-models-logistic-regression.html#cb29-8" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="day-3-non-linear-models-logistic-regression.html#cb29-9" tabindex="-1"></a><span class="co"># Fit once and reuse</span></span>
+<span id="cb29-10"><a href="day-3-non-linear-models-logistic-regression.html#cb29-10" tabindex="-1"></a>lpm1   <span class="ot">&lt;-</span> <span class="fu">lm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
+<span id="cb29-11"><a href="day-3-non-linear-models-logistic-regression.html#cb29-11" tabindex="-1"></a>logit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb29-12"><a href="day-3-non-linear-models-logistic-regression.html#cb29-12" tabindex="-1"></a>logit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> gender <span class="sc">*</span> country <span class="sc">+</span> agea, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb29-13"><a href="day-3-non-linear-models-logistic-regression.html#cb29-13" tabindex="-1"></a>logit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">+</span> country <span class="sc">+</span> eduyrs, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb29-14"><a href="day-3-non-linear-models-logistic-regression.html#cb29-14" tabindex="-1"></a>logit4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> agea <span class="sc">*</span> eduyrs <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb29-15"><a href="day-3-non-linear-models-logistic-regression.html#cb29-15" tabindex="-1"></a>logit5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">*</span> country <span class="sc">+</span> eduyrs, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb29-16"><a href="day-3-non-linear-models-logistic-regression.html#cb29-16" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="day-3-non-linear-models-logistic-regression.html#cb29-17" tabindex="-1"></a><span class="co"># Prediction data for plots</span></span>
+<span id="cb29-18"><a href="day-3-non-linear-models-logistic-regression.html#cb29-18" tabindex="-1"></a>age_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(ess<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">max</span>(ess<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">length.out =</span> <span class="dv">60</span>)</span>
+<span id="cb29-19"><a href="day-3-non-linear-models-logistic-regression.html#cb29-19" tabindex="-1"></a>edu_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(ess<span class="sc">$</span>eduyrs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">max</span>(ess<span class="sc">$</span>eduyrs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">length.out =</span> <span class="dv">40</span>)</span>
+<span id="cb29-20"><a href="day-3-non-linear-models-logistic-regression.html#cb29-20" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="day-3-non-linear-models-logistic-regression.html#cb29-21" tabindex="-1"></a>nd2 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">country =</span> <span class="fu">c</span>(<span class="st">&quot;GB&quot;</span>,<span class="st">&quot;DE&quot;</span>,<span class="st">&quot;FR&quot;</span>),</span>
+<span id="cb29-22"><a href="day-3-non-linear-models-logistic-regression.html#cb29-22" tabindex="-1"></a>                   <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>),</span>
+<span id="cb29-23"><a href="day-3-non-linear-models-logistic-regression.html#cb29-23" tabindex="-1"></a>                   <span class="at">agea =</span> <span class="fu">mean</span>(ess<span class="sc">$</span>agea, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb29-24"><a href="day-3-non-linear-models-logistic-regression.html#cb29-24" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit2, <span class="at">newdata =</span> nd2, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-25"><a href="day-3-non-linear-models-logistic-regression.html#cb29-25" tabindex="-1"></a>nd2<span class="sc">$</span>pr <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred2<span class="sc">$</span>fit)</span>
+<span id="cb29-26"><a href="day-3-non-linear-models-logistic-regression.html#cb29-26" tabindex="-1"></a>nd2<span class="sc">$</span>lo <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred2<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred2<span class="sc">$</span>se.fit)</span>
+<span id="cb29-27"><a href="day-3-non-linear-models-logistic-regression.html#cb29-27" tabindex="-1"></a>nd2<span class="sc">$</span>hi <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred2<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred2<span class="sc">$</span>se.fit)</span>
+<span id="cb29-28"><a href="day-3-non-linear-models-logistic-regression.html#cb29-28" tabindex="-1"></a>plot_gender_country <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd2, <span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> pr, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb29-29"><a href="day-3-non-linear-models-logistic-regression.html#cb29-29" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb29-30"><a href="day-3-non-linear-models-logistic-regression.html#cb29-30" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lo, <span class="at">ymax =</span> hi), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb29-31"><a href="day-3-non-linear-models-logistic-regression.html#cb29-31" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-32"><a href="day-3-non-linear-models-logistic-regression.html#cb29-32" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb29-33"><a href="day-3-non-linear-models-logistic-regression.html#cb29-33" tabindex="-1"></a></span>
+<span id="cb29-34"><a href="day-3-non-linear-models-logistic-regression.html#cb29-34" tabindex="-1"></a>nd3 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">agea =</span> age_seq, <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>),</span>
+<span id="cb29-35"><a href="day-3-non-linear-models-logistic-regression.html#cb29-35" tabindex="-1"></a>                   <span class="at">country =</span> <span class="st">&quot;GB&quot;</span>, <span class="at">eduyrs =</span> <span class="fu">mean</span>(ess<span class="sc">$</span>eduyrs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb29-36"><a href="day-3-non-linear-models-logistic-regression.html#cb29-36" tabindex="-1"></a>pred3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit3, <span class="at">newdata =</span> nd3, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-37"><a href="day-3-non-linear-models-logistic-regression.html#cb29-37" tabindex="-1"></a>nd3<span class="sc">$</span>pr <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred3<span class="sc">$</span>fit)</span>
+<span id="cb29-38"><a href="day-3-non-linear-models-logistic-regression.html#cb29-38" tabindex="-1"></a>nd3<span class="sc">$</span>lo <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred3<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred3<span class="sc">$</span>se.fit)</span>
+<span id="cb29-39"><a href="day-3-non-linear-models-logistic-regression.html#cb29-39" tabindex="-1"></a>nd3<span class="sc">$</span>hi <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred3<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred3<span class="sc">$</span>se.fit)</span>
+<span id="cb29-40"><a href="day-3-non-linear-models-logistic-regression.html#cb29-40" tabindex="-1"></a>plot_gender_age <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd3, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> pr, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb29-41"><a href="day-3-non-linear-models-logistic-regression.html#cb29-41" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-42"><a href="day-3-non-linear-models-logistic-regression.html#cb29-42" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lo, <span class="at">ymax =</span> hi, <span class="at">fill =</span> gender), <span class="at">alpha =</span> <span class="fl">0.15</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb29-43"><a href="day-3-non-linear-models-logistic-regression.html#cb29-43" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-44"><a href="day-3-non-linear-models-logistic-regression.html#cb29-44" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb29-45"><a href="day-3-non-linear-models-logistic-regression.html#cb29-45" tabindex="-1"></a></span>
+<span id="cb29-46"><a href="day-3-non-linear-models-logistic-regression.html#cb29-46" tabindex="-1"></a>nd4 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">eduyrs =</span> edu_seq,</span>
+<span id="cb29-47"><a href="day-3-non-linear-models-logistic-regression.html#cb29-47" tabindex="-1"></a>                   <span class="at">agea =</span> <span class="fu">quantile</span>(ess<span class="sc">$</span>agea, <span class="fu">c</span>(.<span class="dv">2</span>,.<span class="dv">5</span>,.<span class="dv">8</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-48"><a href="day-3-non-linear-models-logistic-regression.html#cb29-48" tabindex="-1"></a>                   <span class="at">gender =</span> <span class="st">&quot;Male&quot;</span>, <span class="at">country =</span> <span class="st">&quot;GB&quot;</span>)</span>
+<span id="cb29-49"><a href="day-3-non-linear-models-logistic-regression.html#cb29-49" tabindex="-1"></a>pred4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit4, <span class="at">newdata =</span> nd4, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-50"><a href="day-3-non-linear-models-logistic-regression.html#cb29-50" tabindex="-1"></a>nd4<span class="sc">$</span>pr <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred4<span class="sc">$</span>fit)</span>
+<span id="cb29-51"><a href="day-3-non-linear-models-logistic-regression.html#cb29-51" tabindex="-1"></a>nd4<span class="sc">$</span>lo <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred4<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred4<span class="sc">$</span>se.fit)</span>
+<span id="cb29-52"><a href="day-3-non-linear-models-logistic-regression.html#cb29-52" tabindex="-1"></a>nd4<span class="sc">$</span>hi <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred4<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred4<span class="sc">$</span>se.fit)</span>
+<span id="cb29-53"><a href="day-3-non-linear-models-logistic-regression.html#cb29-53" tabindex="-1"></a>plot_age_edu <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd4, <span class="fu">aes</span>(<span class="at">x =</span> eduyrs, <span class="at">y =</span> pr, <span class="at">color =</span> <span class="fu">factor</span>(agea))) <span class="sc">+</span></span>
+<span id="cb29-54"><a href="day-3-non-linear-models-logistic-regression.html#cb29-54" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-55"><a href="day-3-non-linear-models-logistic-regression.html#cb29-55" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lo, <span class="at">ymax =</span> hi, <span class="at">fill =</span> <span class="fu">factor</span>(agea)), <span class="at">alpha =</span> <span class="fl">0.12</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb29-56"><a href="day-3-non-linear-models-logistic-regression.html#cb29-56" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Years of education&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Age quantile&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-57"><a href="day-3-non-linear-models-logistic-regression.html#cb29-57" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb29-58"><a href="day-3-non-linear-models-logistic-regression.html#cb29-58" tabindex="-1"></a></span>
+<span id="cb29-59"><a href="day-3-non-linear-models-logistic-regression.html#cb29-59" tabindex="-1"></a>nd5 <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">agea =</span> age_seq,</span>
+<span id="cb29-60"><a href="day-3-non-linear-models-logistic-regression.html#cb29-60" tabindex="-1"></a>                   <span class="at">gender =</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>),</span>
+<span id="cb29-61"><a href="day-3-non-linear-models-logistic-regression.html#cb29-61" tabindex="-1"></a>                   <span class="at">country =</span> <span class="fu">c</span>(<span class="st">&quot;GB&quot;</span>,<span class="st">&quot;DE&quot;</span>,<span class="st">&quot;FR&quot;</span>),</span>
+<span id="cb29-62"><a href="day-3-non-linear-models-logistic-regression.html#cb29-62" tabindex="-1"></a>                   <span class="at">eduyrs =</span> <span class="fu">mean</span>(ess<span class="sc">$</span>eduyrs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb29-63"><a href="day-3-non-linear-models-logistic-regression.html#cb29-63" tabindex="-1"></a>pred5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit5, <span class="at">newdata =</span> nd5, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-64"><a href="day-3-non-linear-models-logistic-regression.html#cb29-64" tabindex="-1"></a>nd5<span class="sc">$</span>pr <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred5<span class="sc">$</span>fit)</span>
+<span id="cb29-65"><a href="day-3-non-linear-models-logistic-regression.html#cb29-65" tabindex="-1"></a>nd5<span class="sc">$</span>lo <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred5<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred5<span class="sc">$</span>se.fit)</span>
+<span id="cb29-66"><a href="day-3-non-linear-models-logistic-regression.html#cb29-66" tabindex="-1"></a>nd5<span class="sc">$</span>hi <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred5<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred5<span class="sc">$</span>se.fit)</span>
+<span id="cb29-67"><a href="day-3-non-linear-models-logistic-regression.html#cb29-67" tabindex="-1"></a>plot_threeway <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd5, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> pr, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb29-68"><a href="day-3-non-linear-models-logistic-regression.html#cb29-68" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb29-69"><a href="day-3-non-linear-models-logistic-regression.html#cb29-69" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lo, <span class="at">ymax =</span> hi, <span class="at">fill =</span> gender), <span class="at">alpha =</span> <span class="fl">0.12</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb29-70"><a href="day-3-non-linear-models-logistic-regression.html#cb29-70" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> country) <span class="sc">+</span></span>
+<span id="cb29-71"><a href="day-3-non-linear-models-logistic-regression.html#cb29-71" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-72"><a href="day-3-non-linear-models-logistic-regression.html#cb29-72" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb29-73"><a href="day-3-non-linear-models-logistic-regression.html#cb29-73" tabindex="-1"></a></span>
+<span id="cb29-74"><a href="day-3-non-linear-models-logistic-regression.html#cb29-74" tabindex="-1"></a><span class="co"># Average marginal effects (finite-difference, no parallelism)</span></span>
+<span id="cb29-75"><a href="day-3-non-linear-models-logistic-regression.html#cb29-75" tabindex="-1"></a>calc_ame <span class="ot">&lt;-</span> <span class="cf">function</span>(model, data, var, <span class="at">step =</span> <span class="dv">1</span>) {</span>
+<span id="cb29-76"><a href="day-3-non-linear-models-logistic-regression.html#cb29-76" tabindex="-1"></a>  data_hi <span class="ot">&lt;-</span> data</span>
+<span id="cb29-77"><a href="day-3-non-linear-models-logistic-regression.html#cb29-77" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(data_hi[[var]])) {</span>
+<span id="cb29-78"><a href="day-3-non-linear-models-logistic-regression.html#cb29-78" tabindex="-1"></a>    data_hi[[var]] <span class="ot">&lt;-</span> data_hi[[var]] <span class="sc">+</span> step</span>
+<span id="cb29-79"><a href="day-3-non-linear-models-logistic-regression.html#cb29-79" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.factor</span>(data_hi[[var]]) <span class="sc">||</span> <span class="fu">is.character</span>(data_hi[[var]])) {</span>
+<span id="cb29-80"><a href="day-3-non-linear-models-logistic-regression.html#cb29-80" tabindex="-1"></a>    <span class="co"># flip binary factor</span></span>
+<span id="cb29-81"><a href="day-3-non-linear-models-logistic-regression.html#cb29-81" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">na.omit</span>(<span class="fu">unique</span>(data_hi[[var]])) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>,<span class="st">&quot;Female&quot;</span>))) {</span>
+<span id="cb29-82"><a href="day-3-non-linear-models-logistic-regression.html#cb29-82" tabindex="-1"></a>      data_hi[[var]] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(data_hi[[var]] <span class="sc">==</span> <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)</span>
+<span id="cb29-83"><a href="day-3-non-linear-models-logistic-regression.html#cb29-83" tabindex="-1"></a>    }</span>
+<span id="cb29-84"><a href="day-3-non-linear-models-logistic-regression.html#cb29-84" tabindex="-1"></a>  }</span>
+<span id="cb29-85"><a href="day-3-non-linear-models-logistic-regression.html#cb29-85" tabindex="-1"></a>  p_hi <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> data_hi, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb29-86"><a href="day-3-non-linear-models-logistic-regression.html#cb29-86" tabindex="-1"></a>  p_lo <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, <span class="at">newdata =</span> data, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb29-87"><a href="day-3-non-linear-models-logistic-regression.html#cb29-87" tabindex="-1"></a>  <span class="fu">mean</span>(p_hi <span class="sc">-</span> p_lo, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-88"><a href="day-3-non-linear-models-logistic-regression.html#cb29-88" tabindex="-1"></a>}</span>
+<span id="cb29-89"><a href="day-3-non-linear-models-logistic-regression.html#cb29-89" tabindex="-1"></a>ame_age  <span class="ot">&lt;-</span> <span class="fu">calc_ame</span>(logit5, ess, <span class="st">&quot;agea&quot;</span>, <span class="at">step =</span> <span class="dv">1</span>)</span>
+<span id="cb29-90"><a href="day-3-non-linear-models-logistic-regression.html#cb29-90" tabindex="-1"></a>ame_fem  <span class="ot">&lt;-</span> <span class="fu">calc_ame</span>(logit5, ess, <span class="st">&quot;gender&quot;</span>, <span class="at">step =</span> <span class="dv">0</span>)  <span class="co"># Female vs Male switch</span></span>
+<span id="cb29-91"><a href="day-3-non-linear-models-logistic-regression.html#cb29-91" tabindex="-1"></a>ame_table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb29-92"><a href="day-3-non-linear-models-logistic-regression.html#cb29-92" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">c</span>(<span class="st">&quot;agea (+1 year)&quot;</span>, <span class="st">&quot;gender (Female vs Male)&quot;</span>),</span>
+<span id="cb29-93"><a href="day-3-non-linear-models-logistic-regression.html#cb29-93" tabindex="-1"></a>  <span class="at">AME =</span> <span class="fu">c</span>(ame_age, ame_fem)</span>
+<span id="cb29-94"><a href="day-3-non-linear-models-logistic-regression.html#cb29-94" tabindex="-1"></a>)</span>
+<span id="cb29-95"><a href="day-3-non-linear-models-logistic-regression.html#cb29-95" tabindex="-1"></a></span>
+<span id="cb29-96"><a href="day-3-non-linear-models-logistic-regression.html#cb29-96" tabindex="-1"></a><span class="co"># Marginal effect of being Female at age 25 vs 65</span></span>
+<span id="cb29-97"><a href="day-3-non-linear-models-logistic-regression.html#cb29-97" tabindex="-1"></a>nd_female <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">agea =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">65</span>),</span>
+<span id="cb29-98"><a href="day-3-non-linear-models-logistic-regression.html#cb29-98" tabindex="-1"></a>                        <span class="at">gender =</span> <span class="st">&quot;Female&quot;</span>,</span>
+<span id="cb29-99"><a href="day-3-non-linear-models-logistic-regression.html#cb29-99" tabindex="-1"></a>                        <span class="at">country =</span> <span class="st">&quot;GB&quot;</span>,</span>
+<span id="cb29-100"><a href="day-3-non-linear-models-logistic-regression.html#cb29-100" tabindex="-1"></a>                        <span class="at">eduyrs =</span> <span class="fu">mean</span>(ess<span class="sc">$</span>eduyrs, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb29-101"><a href="day-3-non-linear-models-logistic-regression.html#cb29-101" tabindex="-1"></a>nd_male   <span class="ot">&lt;-</span> nd_female; nd_male<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="st">&quot;Male&quot;</span></span>
+<span id="cb29-102"><a href="day-3-non-linear-models-logistic-regression.html#cb29-102" tabindex="-1"></a>pred_f <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit5, <span class="at">newdata =</span> nd_female, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb29-103"><a href="day-3-non-linear-models-logistic-regression.html#cb29-103" tabindex="-1"></a>pred_m <span class="ot">&lt;-</span> <span class="fu">predict</span>(logit5, <span class="at">newdata =</span> nd_male,   <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span>
+<span id="cb29-104"><a href="day-3-non-linear-models-logistic-regression.html#cb29-104" tabindex="-1"></a>me_female_diff <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">agea =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">65</span>),</span>
+<span id="cb29-105"><a href="day-3-non-linear-models-logistic-regression.html#cb29-105" tabindex="-1"></a>                             <span class="at">diff =</span> pred_f <span class="sc">-</span> pred_m)</span>
+<span id="cb29-106"><a href="day-3-non-linear-models-logistic-regression.html#cb29-106" tabindex="-1"></a>me_female_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(me_female_diff, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(agea), <span class="at">y =</span> diff)) <span class="sc">+</span></span>
+<span id="cb29-107"><a href="day-3-non-linear-models-logistic-regression.html#cb29-107" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;#4C78A8&quot;</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb29-108"><a href="day-3-non-linear-models-logistic-regression.html#cb29-108" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-109"><a href="day-3-non-linear-models-logistic-regression.html#cb29-109" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Pr(Female) - Pr(Male)&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Marginal effect of being Female&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-110"><a href="day-3-non-linear-models-logistic-regression.html#cb29-110" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div id="linear-probability-model-lpm-first" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> 0. Linear probability model (LPM) first<a href="day-3-non-linear-models-logistic-regression.html#linear-probability-model-lpm-first" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><strong>Specification:</strong> <span class="math inline">\(Y_i = X_i\beta + \varepsilon_i,\ Y_i \in \{0,1\}\)</span>. Ordinary least squares with a binary outcome.</li>
+<li><strong>Pros:</strong> Coefficients are immediate probability changes (<span class="math inline">\(\Delta p\)</span>) per unit of <span class="math inline">\(X\)</span>; easy to interpret and to add fixed effects.</li>
+<li><strong>Cons:</strong> Predicted values can leave <span class="math inline">\([0,1]\)</span>; errors are heteroskedastic; marginal effects are assumed constant even when baseline risk is near 0 or 1.</li>
+<li><strong>When is LPM “safe enough”?</strong> Middle-range probabilities (e.g., 0.2–0.8), modest leverage points, and when the goal is fast descriptive decomposition or fixed-effects absorption. Use robust standard errors.</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="day-3-non-linear-models-logistic-regression.html#cb30-1" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb30-2"><a href="day-3-non-linear-models-logistic-regression.html#cb30-2" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb30-3"><a href="day-3-non-linear-models-logistic-regression.html#cb30-3" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="day-3-non-linear-models-logistic-regression.html#cb30-4" tabindex="-1"></a>lpm_vcov <span class="ot">&lt;-</span> sandwich<span class="sc">::</span><span class="fu">vcovHC</span>(lpm1, <span class="at">type =</span> <span class="st">&quot;HC1&quot;</span>)</span>
+<span id="cb30-5"><a href="day-3-non-linear-models-logistic-regression.html#cb30-5" tabindex="-1"></a>lpm_tidy <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(lpm1, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">vcov =</span> lpm_vcov)</span></code></pre></div>
+<div id="output-12" class="section level4 hasAnchor" number="5.1.0.1">
+<h4><span class="header-section-number">5.1.0.1</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-12" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 5 × 7
+##   term        estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept) -0.0861  0.00569      -15.1  1.43e-51 -0.0973   -0.0750 
+## 2 agea         0.00397 0.0000969     40.9  0         0.00378   0.00416
+## 3 genderMale   0.0429  0.00356       12.0  2.31e-33  0.0359    0.0498 
+## 4 countryFR   -0.0334  0.00442       -7.56 4.08e-14 -0.0421   -0.0248 
+## 5 countryGB    0.0490  0.00418       11.7  9.41e-32  0.0408    0.0572</code></pre>
+</div>
+<div id="lpm-vs-logit-predictions" class="section level4 hasAnchor" number="5.1.0.2">
+<h4><span class="header-section-number">5.1.0.2</span> LPM vs logit predictions<a href="day-3-non-linear-models-logistic-regression.html#lpm-vs-logit-predictions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="04-logistic-regression_files/figure-html/lpm-vs-logit-1.png" width="672" /></p>
+<p>Observation: If LPM bars stray above 1 or below 0, that signals the need for a logit/probit link. Here the mid-range outcome keeps LPM close, but we switch to logit next for coherent probabilities and curved marginal effects.</p>
+</div>
+</div>
+<div id="simple-logistic-model" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> 1. Simple logistic model<a href="day-3-non-linear-models-logistic-regression.html#simple-logistic-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-logistic-model-1" class="section level3 tabset hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Simple logistic model<a href="day-3-non-linear-models-logistic-regression.html#simple-logistic-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-11" class="section level4 hasAnchor" number="5.2.1.1">
+<h4><span class="header-section-number">5.2.1.1</span> Code<a href="day-3-non-linear-models-logistic-regression.html#code-11" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="day-3-non-linear-models-logistic-regression.html#cb32-1" tabindex="-1"></a>logit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb32-2"><a href="day-3-non-linear-models-logistic-regression.html#cb32-2" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(logit1, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Odds ratios &gt; 1 indicate higher odds of being a regular news reader.</p>
+</div>
+<div id="output-13" class="section level4 hasAnchor" number="5.2.1.2">
+<h4><span class="header-section-number">5.2.1.2</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-13" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 5 × 7
+##   term        estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0175  0.0624      -64.9  0          0.0155    0.0197
+## 2 agea          1.04    0.000941     38.5  0          1.04      1.04  
+## 3 genderMale    1.50    0.0330       12.2  3.33e-34   1.40      1.60  
+## 4 countryFR     0.692   0.0452       -8.16 3.34e-16   0.633     0.755 
+## 5 countryGB     1.48    0.0367       10.7  9.12e-27   1.38      1.59</code></pre>
+<p>Interpretation: Odds ratios &gt;1 raise the chance of regular news use; check if the CI excludes 1 for age, gender, or specific countries before claiming significance.</p>
+</div>
+</div>
+</div>
+<div id="binary-binary-interaction-gender-country" class="section level2 tabset hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> 2. Binary × Binary interaction (gender × country)<a href="day-3-non-linear-models-logistic-regression.html#binary-binary-interaction-gender-country" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="code-12" class="section level4 hasAnchor" number="5.3.0.1">
+<h4><span class="header-section-number">5.3.0.1</span> Code<a href="day-3-non-linear-models-logistic-regression.html#code-12" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="day-3-non-linear-models-logistic-regression.html#cb34-1" tabindex="-1"></a>logit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> gender <span class="sc">*</span> country <span class="sc">+</span> agea, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb34-2"><a href="day-3-non-linear-models-logistic-regression.html#cb34-2" tabindex="-1"></a>plot_gender_country <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd2, <span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> pr, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb34-3"><a href="day-3-non-linear-models-logistic-regression.html#cb34-3" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="day-3-non-linear-models-logistic-regression.html#cb34-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="day-3-non-linear-models-logistic-regression.html#cb34-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+</div>
+<div id="output-14" class="section level4 hasAnchor" number="5.3.0.2">
+<h4><span class="header-section-number">5.3.0.2</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-14" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 7 × 7
+##   term                 estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)            0.0180  0.0662      -60.7  0          0.0158    0.0205
+## 2 genderMale             1.41    0.0522        6.61 3.83e-11   1.27      1.56  
+## 3 countryFR              0.643   0.0673       -6.57 5.14e-11   0.563     0.733 
+## 4 countryGB              1.42    0.0536        6.55 5.87e-11   1.28      1.58  
+## 5 agea                   1.04    0.000941     38.5  0          1.04      1.04  
+## 6 genderMale:countryFR   1.14    0.0907        1.47 1.42e- 1   0.957     1.37  
+## 7 genderMale:countryGB   1.08    0.0735        1.04 2.97e- 1   0.935     1.25</code></pre>
+<p><img src="04-logistic-regression_files/figure-html/logit2-out-1.png" width="672" />
+Interpretation: If male–female bars overlap within countries (CI bars), gender differences are modest. Compare across countries to see where the gap is largest.</p>
+</div>
+</div>
+<div id="binary-continuous-interaction-gender-age-1" class="section level2 tabset hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> 3. Binary × Continuous interaction (gender × age)<a href="day-3-non-linear-models-logistic-regression.html#binary-continuous-interaction-gender-age-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="code-13" class="section level4 hasAnchor" number="5.4.0.1">
+<h4><span class="header-section-number">5.4.0.1</span> Code<a href="day-3-non-linear-models-logistic-regression.html#code-13" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="day-3-non-linear-models-logistic-regression.html#cb36-1" tabindex="-1"></a>logit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">+</span> country <span class="sc">+</span> eduyrs, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb36-2"><a href="day-3-non-linear-models-logistic-regression.html#cb36-2" tabindex="-1"></a>plot_gender_age <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd3, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> pr, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="day-3-non-linear-models-logistic-regression.html#cb36-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb36-4"><a href="day-3-non-linear-models-logistic-regression.html#cb36-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
+<span id="cb36-5"><a href="day-3-non-linear-models-logistic-regression.html#cb36-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+</div>
+<div id="output-15" class="section level4 hasAnchor" number="5.4.0.2">
+<h4><span class="header-section-number">5.4.0.2</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-15" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 7 × 7
+##   term            estimate std.error statistic   p.value conf.low conf.high
+##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)       0.0109   0.114      -39.6  0          0.00868    0.0136
+## 2 genderMale        1.26     0.113        2.03 4.22e-  2  1.01       1.57  
+## 3 agea              1.04     0.00141     26.2  1.61e-151  1.03       1.04  
+## 4 countryFR         0.733    0.0460      -6.76 1.34e- 11  0.669      0.802 
+## 5 countryGB         1.51     0.0370      11.2  3.74e- 29  1.41       1.63  
+## 6 eduyrs            1.03     0.00450      7.45 9.68e- 14  1.02       1.04  
+## 7 genderMale:agea   1.00     0.00192      1.41 1.58e-  1  0.999      1.01</code></pre>
+<p><img src="04-logistic-regression_files/figure-html/logit3-out-1.png" width="672" />
+Interpretation: Diverging ribbons indicate age effects differ by gender; if both ribbons rise similarly, the interaction is weak.</p>
+</div>
+</div>
+<div id="continuous-continuous-interaction-age-education" class="section level2 tabset hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> 4. Continuous × Continuous interaction (age × education)<a href="day-3-non-linear-models-logistic-regression.html#continuous-continuous-interaction-age-education" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="code-14" class="section level4 hasAnchor" number="5.5.0.1">
+<h4><span class="header-section-number">5.5.0.1</span> Code<a href="day-3-non-linear-models-logistic-regression.html#code-14" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="day-3-non-linear-models-logistic-regression.html#cb38-1" tabindex="-1"></a>logit4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> agea <span class="sc">*</span> eduyrs <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb38-2"><a href="day-3-non-linear-models-logistic-regression.html#cb38-2" tabindex="-1"></a>plot_age_edu <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd4, <span class="fu">aes</span>(<span class="at">x =</span> eduyrs, <span class="at">y =</span> pr, <span class="at">color =</span> <span class="fu">factor</span>(agea))) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="day-3-non-linear-models-logistic-regression.html#cb38-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="day-3-non-linear-models-logistic-regression.html#cb38-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Years of education&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Age quantile&quot;</span>) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="day-3-non-linear-models-logistic-regression.html#cb38-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+</div>
+<div id="output-16" class="section level4 hasAnchor" number="5.5.0.2">
+<h4><span class="header-section-number">5.5.0.2</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-16" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 7 × 7
+##   term        estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)   0.0133  0.223      -19.4   1.12e-83  0.00860    0.0206
+## 2 agea          1.03    0.00353      9.47  2.80e-21  1.03       1.04  
+## 3 eduyrs        1.01    0.0162       0.707 4.80e- 1  0.980      1.04  
+## 4 genderMale    1.46    0.0334      11.4   6.41e-30  1.37       1.56  
+## 5 countryFR     0.737   0.0461      -6.63  3.29e-11  0.673      0.806 
+## 6 countryGB     1.52    0.0370      11.2   2.53e-29  1.41       1.63  
+## 7 agea:eduyrs   1.00    0.000270     1.44  1.50e- 1  1.00       1.00</code></pre>
+<p><img src="04-logistic-regression_files/figure-html/logit4-out-1.png" width="672" />
+Interpretation: Steeper lines for higher age quantiles would mean education matters more (or less) for older respondents; overlap implies limited moderation.</p>
+</div>
+</div>
+<div id="three-way-interaction-gender-age-country-1" class="section level2 tabset hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> 5. Three-way interaction (gender × age × country)<a href="day-3-non-linear-models-logistic-regression.html#three-way-interaction-gender-age-country-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="code-15" class="section level4 hasAnchor" number="5.6.0.1">
+<h4><span class="header-section-number">5.6.0.1</span> Code<a href="day-3-non-linear-models-logistic-regression.html#code-15" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="day-3-non-linear-models-logistic-regression.html#cb40-1" tabindex="-1"></a>logit5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">*</span> country <span class="sc">+</span> eduyrs, <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb40-2"><a href="day-3-non-linear-models-logistic-regression.html#cb40-2" tabindex="-1"></a>plot_threeway <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd5, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> pr, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="day-3-non-linear-models-logistic-regression.html#cb40-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb40-4"><a href="day-3-non-linear-models-logistic-regression.html#cb40-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> country) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="day-3-non-linear-models-logistic-regression.html#cb40-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Pr(regular news)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="day-3-non-linear-models-logistic-regression.html#cb40-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+</div>
+<div id="output-17" class="section level4 hasAnchor" number="5.6.0.2">
+<h4><span class="header-section-number">5.6.0.2</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-17" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 13 × 7
+##    term                estimate std.error statistic   p.value conf.low conf.high
+##    &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1 (Intercept)          0.00660   0.164     -30.7   2.20e-206  0.00477   0.00907
+##  2 genderMale           0.809     0.203      -1.04  2.97e-  1  0.543     1.20   
+##  3 agea                 1.05      0.00240    19.3   6.67e- 83  1.04      1.05   
+##  4 countryFR            1.52      0.232       1.82  6.91e-  2  0.965     2.40   
+##  5 countryGB            3.30      0.187       6.38  1.73e- 10  2.29      4.76   
+##  6 eduyrs               1.03      0.00452     7.28  3.30e- 13  1.02      1.04   
+##  7 genderMale:agea      1.01      0.00336     2.79  5.33e-  3  1.00      1.02   
+##  8 genderMale:country…  1.29      0.324       0.793 4.28e-  1  0.685     2.44   
+##  9 genderMale:country…  2.46      0.260       3.46  5.37e-  4  1.48      4.10   
+## 10 agea:countryFR       0.986     0.00387    -3.66  2.57e-  4  0.979     0.993  
+## 11 agea:countryGB       0.986     0.00311    -4.69  2.77e-  6  0.980     0.992  
+## 12 genderMale:agea:co…  0.998     0.00542    -0.400 6.89e-  1  0.987     1.01   
+## 13 genderMale:agea:co…  0.985     0.00438    -3.34  8.46e-  4  0.977     0.994</code></pre>
+<p><img src="04-logistic-regression_files/figure-html/logit5-out-1.png" width="672" />
+Interpretation: Scan each country facet—if ribbons separate widely, the age–gender pattern is country-specific; overlapping ribbons suggest similar patterns across countries.</p>
+</div>
+</div>
+<div id="marginal-effects-and-interpretation" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> 6. Marginal effects and interpretation<a href="day-3-non-linear-models-logistic-regression.html#marginal-effects-and-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="day-3-non-linear-models-logistic-regression.html#cb42-1" tabindex="-1"></a><span class="co"># Average marginal effects for age within each country</span></span>
+<span id="cb42-2"><a href="day-3-non-linear-models-logistic-regression.html#cb42-2" tabindex="-1"></a>ame_age <span class="ot">&lt;-</span> <span class="fu">marginaleffects</span>(logit5, <span class="at">variables =</span> <span class="st">&quot;agea&quot;</span>, <span class="at">by =</span> <span class="st">&quot;country&quot;</span>)</span>
+<span id="cb42-3"><a href="day-3-non-linear-models-logistic-regression.html#cb42-3" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="day-3-non-linear-models-logistic-regression.html#cb42-4" tabindex="-1"></a><span class="co"># Marginal effect of being Female at age 25 vs age 65</span></span>
+<span id="cb42-5"><a href="day-3-non-linear-models-logistic-regression.html#cb42-5" tabindex="-1"></a>me_female_age <span class="ot">&lt;-</span> <span class="fu">marginaleffects</span>(logit5, <span class="at">variables =</span> <span class="st">&quot;gender&quot;</span>, <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">agea =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">65</span>)))</span></code></pre></div>
+<ul>
+<li>Prefer predicted probabilities and marginal effects over raw log-odds.</li>
+<li>Inspect separation or influential points with <code>performance::check_model(logit5)</code> if desired.</li>
+</ul>
+<div id="ames-and-focal-contrasts" class="section level3 tabset hasAnchor" number="5.7.1">
+<h3><span class="header-section-number">5.7.1</span> AMEs and focal contrasts<a href="day-3-non-linear-models-logistic-regression.html#ames-and-focal-contrasts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="code-16" class="section level4 hasAnchor" number="5.7.1.1">
+<h4><span class="header-section-number">5.7.1.1</span> Code<a href="day-3-non-linear-models-logistic-regression.html#code-16" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="day-3-non-linear-models-logistic-regression.html#cb43-1" tabindex="-1"></a>ame_table <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb43-2"><a href="day-3-non-linear-models-logistic-regression.html#cb43-2" tabindex="-1"></a>  <span class="at">variable =</span> <span class="fu">c</span>(<span class="st">&quot;agea (+1 year)&quot;</span>, <span class="st">&quot;gender (Female vs Male)&quot;</span>),</span>
+<span id="cb43-3"><a href="day-3-non-linear-models-logistic-regression.html#cb43-3" tabindex="-1"></a>  <span class="at">AME =</span> <span class="fu">c</span>(ame_age, ame_fem)</span>
+<span id="cb43-4"><a href="day-3-non-linear-models-logistic-regression.html#cb43-4" tabindex="-1"></a>)</span>
+<span id="cb43-5"><a href="day-3-non-linear-models-logistic-regression.html#cb43-5" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="day-3-non-linear-models-logistic-regression.html#cb43-6" tabindex="-1"></a>me_female_diff <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">agea =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">65</span>), <span class="at">diff =</span> pred_f <span class="sc">-</span> pred_m)  <span class="co"># from fits chunk</span></span></code></pre></div>
+</div>
+<div id="output-18" class="section level4 hasAnchor" number="5.7.1.2">
+<h4><span class="header-section-number">5.7.1.2</span> Output<a href="day-3-non-linear-models-logistic-regression.html#output-18" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## # A tibble: 2 × 2
+##   variable                    AME
+##   &lt;chr&gt;                     &lt;dbl&gt;
+## 1 agea (+1 year)          0.00451
+## 2 gender (Female vs Male) 0.00237</code></pre>
+<p><img src="04-logistic-regression_files/figure-html/ame-out-1.png" width="672" /></p>
+<p>Interpretation: The AME for age reports the average change in the probability of regular news use for a one-year increase in age. The bar chart shows how the female–male gap differs at ages 25 vs 65; positive bars mean higher probability for women at that age.</p>
+<p>Country-level pooling choices (fixed vs multilevel) are expanded in the next chapter.</p>
+</div>
+</div>
+</div>
+<div id="problem-set-logistic-regression-practice" class="section level2 hasAnchor" number="5.8">
+<h2><span class="header-section-number">5.8</span> Problem set — Logistic regression practice<a href="day-3-non-linear-models-logistic-regression.html#problem-set-logistic-regression-practice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>Recode the outcome as <code>news_daily = nwsptot &gt;= 5</code> and re-estimate <code>logit3</code>. How do the marginal effects of age change when the bar for “regular” consumption is higher?</li>
+<li>Add <code>urban</code> (1/2 = urban, 3–5 = non-urban) as a predictor and interact it with <code>country</code>. Which country shows the largest urban–rural gap in news readership?</li>
+<li>Compare <code>logit4</code> and <code>logit5</code> using AIC and pseudo R² (<code>pscl::pR2</code>). Which balance of complexity and fit seems reasonable for classroom examples?</li>
+<li>For one model, translate results into plain language for a non-technical audience: choose two profiles (e.g., 30-year-old woman in GB vs 60-year-old man in FR) and report predicted probabilities.</li>
+</ol>
+<p>These exercises deliver a full set of interaction types in a nonlinear setting, ready to complement your lecture slides.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="day-2-linear-regression-with-interaction-effects.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="country-effects-fixed-effects-and-multilevel-modeling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
