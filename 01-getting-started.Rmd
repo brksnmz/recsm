@@ -30,8 +30,11 @@ ess_raw <- read_csv("ess.csv", show_col_types = FALSE)
 
 ess <- ess_raw |>
   filter(cntry %in% c("GB", "DE", "FR")) |>
-  mutate(across(everything(), ~ na_if(.x, ""))) |>
-  mutate(across(where(is.character), readr::parse_number, na = ""))
+  mutate(across(where(is.character), ~ na_if(.x, ""))) |>
+  mutate(
+    cntry = factor(cntry),
+    across(c(agea, gndr, ppltrst, netustm, nwsptot), ~ suppressWarnings(as.numeric(.x)))
+  )
 
 # quick glimpse
 ess |> select(cntry, agea, gndr, ppltrst, netustm, nwsptot) |> slice_head(n = 5)
