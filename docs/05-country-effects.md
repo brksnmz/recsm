@@ -39,7 +39,7 @@ fe_tidy <- broom::tidy(fe_logit, exponentiate = TRUE, conf.int = TRUE)
 
 
 ```
-## # A tibble: 6 × 7
+## # A tibble: 6 x 7
 ##   term        estimate std.error statistic  p.value conf.low conf.high
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
 ## 1 (Intercept)  0.00997  0.0971      -47.5  0         0.00824    0.0121

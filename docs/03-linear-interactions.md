@@ -144,7 +144,7 @@ broom::tidy(m0)
 
 
 ```
-## # A tibble: 6 × 5
+## # A tibble: 6 x 5
 ##   term        estimate std.error statistic  p.value
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)  4.68     0.0394      119.   0       
@@ -173,7 +173,7 @@ int_plot1 <- ggplot(nd1, aes(x = urban, y = fit, fill = gender)) +
 
 
 ```
-## # A tibble: 8 × 5
+## # A tibble: 8 x 5
 ##   term                  estimate std.error statistic  p.value
 ##   <chr>                    <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)            4.65     0.0412      113.   0       
@@ -208,7 +208,7 @@ int_plot2 <- ggplot(nd2, aes(x = agea, y = fit, color = gender)) +
 
 
 ```
-## # A tibble: 7 × 5
+## # A tibble: 7 x 5
 ##   term             estimate std.error statistic  p.value
 ##   <chr>               <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)      4.68      0.0498      93.9   0       
@@ -242,7 +242,7 @@ int_plot3 <- ggplot(nd3, aes(x = news_days, y = fit, color = factor(agea))) +
 
 
 ```
-## # A tibble: 7 × 5
+## # A tibble: 7 x 5
 ##   term           estimate std.error statistic  p.value
 ##   <chr>             <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)     4.78     0.0516     92.6    0       
@@ -277,7 +277,7 @@ int_plot4 <- ggplot(nd4, aes(x = agea, y = fit, color = gender)) +
 
 
 ```
-## # A tibble: 13 × 5
+## # A tibble: 13 x 5
 ##    term                      estimate std.error statistic  p.value
 ##    <chr>                        <dbl>     <dbl>     <dbl>    <dbl>
 ##  1 (Intercept)                5.19      0.0760     68.2   0       

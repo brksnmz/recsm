@@ -18,6 +18,7 @@ Goal: practice measurement levels, univariate summaries, and basic visualisation
 library(dplyr)
 library(ggplot2)
 
+source("clean_ess.R")
 ess <- clean_ess()
 ````
 
@@ -100,7 +101,7 @@ counts <- ess |>
 
 
 ```
-## # A tibble: 3 × 7
+## # A tibble: 3 x 7
 ##   cntry trust_mean trust_sd news_med news_iqr net_mean net_sd
 ##   <chr>      <dbl>    <dbl>    <dbl>    <dbl>    <dbl>  <dbl>
 ## 1 DE          4.90     2.40        1        1    1322.  2417.
@@ -111,7 +112,7 @@ counts <- ess |>
 <img src="02-descriptive-ess_files/figure-html/psA-output-1.png" width="672" />
 
 ```
-## # A tibble: 43 × 5
+## # A tibble: 43 x 5
 ## # Groups:   cntry [3]
 ##    cntry gender dom_group     n    prop
 ##    <chr> <chr>  <fct>     <int>   <dbl>
@@ -125,7 +126,7 @@ counts <- ess |>
 ##  8 DE    Male   Suburbs    2396 0.0650 
 ##  9 DE    Male   Town       6475 0.176  
 ## 10 DE    Male   Village    5739 0.156  
-## # ℹ 33 more rows
+## # i 33 more rows
 ```
 
 ## Problem set B — Bivariate exploration
@@ -160,7 +161,7 @@ trust_ttest <- t.test(ppltrst ~ gender, data = ess)
 
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 3 x 2
 ##   cntry     corr
 ##   <chr>    <dbl>
 ## 1 DE     0.00129

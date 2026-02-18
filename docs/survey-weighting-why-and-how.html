@@ -319,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="survey-weighting-why-and-how.html#cb53-1" tabindex="-1"></a>lpm_w <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country,</span>
 <span id="cb53-2"><a href="survey-weighting-why-and-how.html#cb53-2" tabindex="-1"></a>                <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">gaussian</span>())</span>
 <span id="cb53-3"><a href="survey-weighting-why-and-how.html#cb53-3" tabindex="-1"></a><span class="fu">tidy</span>(lpm_w)</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 5
+<pre><code>## # A tibble: 5 x 5
 ##   term        estimate std.error statistic     p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 (Intercept)  0.240    0.0493        4.86 0.00000453 
@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="survey-weighting-why-and-how.html#cb55-1" tabindex="-1"></a>logit_w <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country,</span>
 <span id="cb55-2"><a href="survey-weighting-why-and-how.html#cb55-2" tabindex="-1"></a>                  <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">quasibinomial</span>())</span>
 <span id="cb55-3"><a href="survey-weighting-why-and-how.html#cb55-3" tabindex="-1"></a><span class="fu">tidy</span>(logit_w, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 × 5
+<pre><code>## # A tibble: 5 x 5
 ##   term        estimate std.error statistic     p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 (Intercept)    0.327   0.221       -5.06 0.00000204 
