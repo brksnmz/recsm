@@ -1,6 +1,6 @@
 # Day 2 — Linear regression with interaction effects
 
-We replace the old dimensionality-reduction content with a deep dive on interactions. The dependent variable is **social trust (`ppltrst`)**. Predictors come from media use and demographics in the ESS subset.
+The dependent variable is **social trust (`ppltrst`)**. Predictors come from media use and demographics in the ESS subset.
 
 **Model notation recap**
 
@@ -138,7 +138,7 @@ anim_plot <- ggplot(anim_df, aes(x = agea, y = ppltrst, frame = slope)) +
 base_resid
 ```
 
-```{r ols-intuition-out, echo=FALSE, eval=FALSE}
+```{r ols-intuition-out, echo=TRUE, eval=TRUE}
 # To see the moving line locally:
 # library(plotly)
 # subplot(
@@ -164,7 +164,7 @@ broom::tidy(m0)
 ```{r m0-out, echo=FALSE}
 broom::tidy(m0)
 ```
-Interpretation: Trust increases slightly with age and differs by country and gender; focus on sign and magnitude of the coefficients rather than raw p-values when discussing effect sizes.
+Interpretation: Trust decreases slightly with age and differs by country and gender; focus on sign and magnitude of the coefficients rather than raw p-values when discussing effect sizes.
 
 ## 2. Binary × Binary interaction (gender × urban) {.tabset}
 

@@ -1,6 +1,6 @@
 # Day 2 — Linear regression with interaction effects
 
-We replace the old dimensionality-reduction content with a deep dive on interactions. The dependent variable is **social trust (`ppltrst`)**. Predictors come from media use and demographics in the ESS subset.
+The dependent variable is **social trust (`ppltrst`)**. Predictors come from media use and demographics in the ESS subset.
 
 **Model notation recap**
 
@@ -127,6 +127,15 @@ anim_plot <- ggplot(anim_df, aes(x = agea, y = ppltrst, frame = slope)) +
 <img src="03-linear-interactions_files/figure-html/ols-static-1.png" width="672" />
 
 
+```r
+# To see the moving line locally:
+# library(plotly)
+# subplot(
+#   ggplotly(base_resid),
+#   ggplotly(anim_plot) %>% animation_opts(frame = 250, transition = 0, redraw = FALSE),
+#   nrows = 2, heights = c(0.55, 0.45), margin = 0.05
+# )
+```
 
 Interpretation: the static panel shows residuals; if you run the optional plotly code locally, the moving line illustrates how residuals shrink as the slope approaches the OLS solution.
 
@@ -144,7 +153,7 @@ broom::tidy(m0)
 
 
 ```
-## # A tibble: 6 x 5
+## # A tibble: 6 × 5
 ##   term        estimate std.error statistic  p.value
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)  4.68     0.0394      119.   0       
@@ -154,7 +163,7 @@ broom::tidy(m0)
 ## 5 countryFR   -0.244    0.0307       -7.94 2.00e-15
 ## 6 countryGB    0.545    0.0287       19.0  9.60e-80
 ```
-Interpretation: Trust increases slightly with age and differs by country and gender; focus on sign and magnitude of the coefficients rather than raw p-values when discussing effect sizes.
+Interpretation: Trust decreases slightly with age and differs by country and gender; focus on sign and magnitude of the coefficients rather than raw p-values when discussing effect sizes.
 
 ## 2. Binary × Binary interaction (gender × urban) {.tabset}
 
@@ -173,7 +182,7 @@ int_plot1 <- ggplot(nd1, aes(x = urban, y = fit, fill = gender)) +
 
 
 ```
-## # A tibble: 8 x 5
+## # A tibble: 8 × 5
 ##   term                  estimate std.error statistic  p.value
 ##   <chr>                    <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)            4.65     0.0412      113.   0       
@@ -208,7 +217,7 @@ int_plot2 <- ggplot(nd2, aes(x = agea, y = fit, color = gender)) +
 
 
 ```
-## # A tibble: 7 x 5
+## # A tibble: 7 × 5
 ##   term             estimate std.error statistic  p.value
 ##   <chr>               <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)      4.68      0.0498      93.9   0       
@@ -242,7 +251,7 @@ int_plot3 <- ggplot(nd3, aes(x = news_days, y = fit, color = factor(agea))) +
 
 
 ```
-## # A tibble: 7 x 5
+## # A tibble: 7 × 5
 ##   term           estimate std.error statistic  p.value
 ##   <chr>             <dbl>     <dbl>     <dbl>    <dbl>
 ## 1 (Intercept)     4.78     0.0516     92.6    0       
@@ -277,7 +286,7 @@ int_plot4 <- ggplot(nd4, aes(x = agea, y = fit, color = gender)) +
 
 
 ```
-## # A tibble: 13 x 5
+## # A tibble: 13 × 5
 ##    term                      estimate std.error statistic  p.value
 ##    <chr>                        <dbl>     <dbl>     <dbl>    <dbl>
 ##  1 (Intercept)                5.19      0.0760     68.2   0       

@@ -247,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="day-2-linear-regression-with-interaction-effects" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Day 2 — Linear regression with interaction effects<a href="day-2-linear-regression-with-interaction-effects.html#day-2-linear-regression-with-interaction-effects" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>We replace the old dimensionality-reduction content with a deep dive on interactions. The dependent variable is <strong>social trust (<code>ppltrst</code>)</strong>. Predictors come from media use and demographics in the ESS subset.</p>
+<p>The dependent variable is <strong>social trust (<code>ppltrst</code>)</strong>. Predictors come from media use and demographics in the ESS subset.</p>
 <p><strong>Model notation recap</strong></p>
 <ul>
 <li>Baseline linear model: <span class="math inline">\(Y_i = \beta_0 + \mathbf{x}_i^\top \boldsymbol\beta + \varepsilon_i\)</span>, <span class="math inline">\(\varepsilon_i \sim \text{i.i.d. }(0, \sigma^2)\)</span>.</li>
@@ -367,6 +367,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="output-6" class="section level4 hasAnchor" number="4.1.0.1">
 <h4><span class="header-section-number">4.1.0.1</span> Output<a href="day-2-linear-regression-with-interaction-effects.html#output-6" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><img src="03-linear-interactions_files/figure-html/ols-static-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-1" tabindex="-1"></a><span class="co"># To see the moving line locally:</span></span>
+<span id="cb18-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-2" tabindex="-1"></a><span class="co"># library(plotly)</span></span>
+<span id="cb18-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-3" tabindex="-1"></a><span class="co"># subplot(</span></span>
+<span id="cb18-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-4" tabindex="-1"></a><span class="co">#   ggplotly(base_resid),</span></span>
+<span id="cb18-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-5" tabindex="-1"></a><span class="co">#   ggplotly(anim_plot) %&gt;% animation_opts(frame = 250, transition = 0, redraw = FALSE),</span></span>
+<span id="cb18-6"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-6" tabindex="-1"></a><span class="co">#   nrows = 2, heights = c(0.55, 0.45), margin = 0.05</span></span>
+<span id="cb18-7"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-7" tabindex="-1"></a><span class="co"># )</span></span></code></pre></div>
 <p>Interpretation: the static panel shows residuals; if you run the optional plotly code locally, the moving line illustrates how residuals shrink as the slope approaches the OLS solution.</p>
 </div>
 </div>
@@ -374,12 +381,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.2</span> 1. Baseline linear model<a href="day-2-linear-regression-with-interaction-effects.html#baseline-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="code-6" class="section level4 hasAnchor" number="4.2.0.1">
 <h4><span class="header-section-number">4.2.0.1</span> Code<a href="day-2-linear-regression-with-interaction-effects.html#code-6" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-1" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> news_days <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
-<span id="cb18-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb18-2" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m0)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb19-1" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> news_days <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
+<span id="cb19-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb19-2" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m0)</span></code></pre></div>
 </div>
 <div id="output-7" class="section level4 hasAnchor" number="4.2.0.2">
 <h4><span class="header-section-number">4.2.0.2</span> Output<a href="day-2-linear-regression-with-interaction-effects.html#output-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>## # A tibble: 6 x 5
+<pre><code>## # A tibble: 6 × 5
 ##   term        estimate std.error statistic  p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)  4.68     0.0394      119.   0       
@@ -388,22 +395,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 news_days    0.0727   0.00988       7.36 1.93e-13
 ## 5 countryFR   -0.244    0.0307       -7.94 2.00e-15
 ## 6 countryGB    0.545    0.0287       19.0  9.60e-80</code></pre>
-<p>Interpretation: Trust increases slightly with age and differs by country and gender; focus on sign and magnitude of the coefficients rather than raw p-values when discussing effect sizes.</p>
+<p>Interpretation: Trust decreases slightly with age and differs by country and gender; focus on sign and magnitude of the coefficients rather than raw p-values when discussing effect sizes.</p>
 </div>
 </div>
 <div id="binary-binary-interaction-gender-urban" class="section level2 tabset hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> 2. Binary × Binary interaction (gender × urban)<a href="day-2-linear-regression-with-interaction-effects.html#binary-binary-interaction-gender-urban" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="code-7" class="section level4 hasAnchor" number="4.3.0.1">
 <h4><span class="header-section-number">4.3.0.1</span> Code<a href="day-2-linear-regression-with-interaction-effects.html#code-7" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb20-1" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> gender <span class="sc">*</span> urban <span class="sc">+</span> agea <span class="sc">+</span> news_days <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
-<span id="cb20-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb20-2" tabindex="-1"></a>int_plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd1, <span class="fu">aes</span>(<span class="at">x =</span> urban, <span class="at">y =</span> fit, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb20-3" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb20-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Residential area&quot;</span>) <span class="sc">+</span></span>
-<span id="cb20-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb20-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb21-1" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> gender <span class="sc">*</span> urban <span class="sc">+</span> agea <span class="sc">+</span> news_days <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
+<span id="cb21-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb21-2" tabindex="-1"></a>int_plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd1, <span class="fu">aes</span>(<span class="at">x =</span> urban, <span class="at">y =</span> fit, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb21-3" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.6</span>), <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb21-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Residential area&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb21-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 </div>
 <div id="output-8" class="section level4 hasAnchor" number="4.3.0.2">
 <h4><span class="header-section-number">4.3.0.2</span> Output<a href="day-2-linear-regression-with-interaction-effects.html#output-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>## # A tibble: 8 x 5
+<pre><code>## # A tibble: 8 × 5
 ##   term                  estimate std.error statistic  p.value
 ##   &lt;chr&gt;                    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)            4.65     0.0412      113.   0       
@@ -423,15 +430,15 @@ Interpretation: The urban–rural trust gap is small; note whether the CI bars f
 <h2><span class="header-section-number">4.4</span> 3. Binary × Continuous interaction (gender × age)<a href="day-2-linear-regression-with-interaction-effects.html#binary-continuous-interaction-gender-age" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="code-8" class="section level4 hasAnchor" number="4.4.0.1">
 <h4><span class="header-section-number">4.4.0.1</span> Code<a href="day-2-linear-regression-with-interaction-effects.html#code-8" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb22-1" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">+</span> news_days <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
-<span id="cb22-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb22-2" tabindex="-1"></a>int_plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd2, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> fit, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb22-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb22-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
-<span id="cb22-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb22-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb23-1" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">+</span> news_days <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
+<span id="cb23-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb23-2" tabindex="-1"></a>int_plot2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd2, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> fit, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb23-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb23-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb23-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 </div>
 <div id="output-9" class="section level4 hasAnchor" number="4.4.0.2">
 <h4><span class="header-section-number">4.4.0.2</span> Output<a href="day-2-linear-regression-with-interaction-effects.html#output-9" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>## # A tibble: 7 x 5
+<pre><code>## # A tibble: 7 × 5
 ##   term             estimate std.error statistic  p.value
 ##   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)      4.68      0.0498      93.9   0       
@@ -450,15 +457,15 @@ Interpretation: Slopes by age differ by gender; parallel ribbons would imply no 
 <h2><span class="header-section-number">4.5</span> 4. Continuous × Continuous interaction (age × news consumption)<a href="day-2-linear-regression-with-interaction-effects.html#continuous-continuous-interaction-age-news-consumption" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="code-9" class="section level4 hasAnchor" number="4.5.0.1">
 <h4><span class="header-section-number">4.5.0.1</span> Code<a href="day-2-linear-regression-with-interaction-effects.html#code-9" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb24-1" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> agea <span class="sc">*</span> news_days <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
-<span id="cb24-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb24-2" tabindex="-1"></a>int_plot3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd3, <span class="fu">aes</span>(<span class="at">x =</span> news_days, <span class="at">y =</span> fit, <span class="at">color =</span> <span class="fu">factor</span>(agea))) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb24-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb24-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;News days per week&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Age quantile&quot;</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb24-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb25-1" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> agea <span class="sc">*</span> news_days <span class="sc">+</span> gender <span class="sc">+</span> country, <span class="at">data =</span> ess)</span>
+<span id="cb25-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb25-2" tabindex="-1"></a>int_plot3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd3, <span class="fu">aes</span>(<span class="at">x =</span> news_days, <span class="at">y =</span> fit, <span class="at">color =</span> <span class="fu">factor</span>(agea))) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb25-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb25-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;News days per week&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Age quantile&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb25-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 </div>
 <div id="output-10" class="section level4 hasAnchor" number="4.5.0.2">
 <h4><span class="header-section-number">4.5.0.2</span> Output<a href="day-2-linear-regression-with-interaction-effects.html#output-10" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>## # A tibble: 7 x 5
+<pre><code>## # A tibble: 7 × 5
 ##   term           estimate std.error statistic  p.value
 ##   &lt;chr&gt;             &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)     4.78     0.0516     92.6    0       
@@ -477,16 +484,16 @@ Interpretation: Check whether the news-consumption slope changes across age quan
 <h2><span class="header-section-number">4.6</span> 5. Three-way interaction (gender × age × country)<a href="day-2-linear-regression-with-interaction-effects.html#three-way-interaction-gender-age-country" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="code-10" class="section level4 hasAnchor" number="4.6.0.1">
 <h4><span class="header-section-number">4.6.0.1</span> Code<a href="day-2-linear-regression-with-interaction-effects.html#code-10" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb26-1" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">*</span> country <span class="sc">+</span> news_days, <span class="at">data =</span> ess)</span>
-<span id="cb26-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb26-2" tabindex="-1"></a>int_plot4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd4, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> fit, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
-<span id="cb26-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb26-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb26-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb26-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> country) <span class="sc">+</span></span>
-<span id="cb26-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb26-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
-<span id="cb26-6"><a href="day-2-linear-regression-with-interaction-effects.html#cb26-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb27-1" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ppltrst <span class="sc">~</span> gender <span class="sc">*</span> agea <span class="sc">*</span> country <span class="sc">+</span> news_days, <span class="at">data =</span> ess)</span>
+<span id="cb27-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb27-2" tabindex="-1"></a>int_plot4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(nd4, <span class="fu">aes</span>(<span class="at">x =</span> agea, <span class="at">y =</span> fit, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb27-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb27-4"><a href="day-2-linear-regression-with-interaction-effects.html#cb27-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> country) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="day-2-linear-regression-with-interaction-effects.html#cb27-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Predicted social trust&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Age&quot;</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="day-2-linear-regression-with-interaction-effects.html#cb27-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 </div>
 <div id="output-11" class="section level4 hasAnchor" number="4.6.0.2">
 <h4><span class="header-section-number">4.6.0.2</span> Output<a href="day-2-linear-regression-with-interaction-effects.html#output-11" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>## # A tibble: 13 x 5
+<pre><code>## # A tibble: 13 × 5
 ##    term                      estimate std.error statistic  p.value
 ##    &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ##  1 (Intercept)                5.19      0.0760     68.2   0       
@@ -509,9 +516,9 @@ Interpretation: Three-way plots show country-specific age slopes by gender; look
 </div>
 <div id="model-comparison-and-diagnostics" class="section level2 hasAnchor" number="4.7">
 <h2><span class="header-section-number">4.7</span> 6. Model comparison and diagnostics<a href="day-2-linear-regression-with-interaction-effects.html#model-comparison-and-diagnostics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb28-1" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(m0, m1, m2, m3, m4)</span>
-<span id="cb28-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb28-2" tabindex="-1"></a><span class="co"># quick residual check</span></span>
-<span id="cb28-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb28-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)); <span class="fu">plot</span>(m3)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="day-2-linear-regression-with-interaction-effects.html#cb29-1" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(m0, m1, m2, m3, m4)</span>
+<span id="cb29-2"><a href="day-2-linear-regression-with-interaction-effects.html#cb29-2" tabindex="-1"></a><span class="co"># quick residual check</span></span>
+<span id="cb29-3"><a href="day-2-linear-regression-with-interaction-effects.html#cb29-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)); <span class="fu">plot</span>(m3)</span></code></pre></div>
 </div>
 <div id="problem-set-interaction-lab" class="section level2 hasAnchor" number="4.8">
 <h2><span class="header-section-number">4.8</span> Problem set — Interaction lab<a href="day-2-linear-regression-with-interaction-effects.html#problem-set-interaction-lab" class="anchor-section" aria-label="Anchor link to header"></a></h2>

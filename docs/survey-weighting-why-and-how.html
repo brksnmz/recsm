@@ -260,49 +260,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong><code>stratum</code> (strata):</strong> Mutually exclusive groups within which PSUs were sampled (e.g., by region × urbanicity). Stratification improves precision; variance estimation must respect it.</li>
 <li><strong>Design degrees of freedom:</strong> With clustering and stratification, the effective df are closer to the number of PSUs minus strata, not the raw respondent count—hence the importance of design-aware SEs.</li>
 </ul>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="survey-weighting-why-and-how.html#cb50-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb50-2"><a href="survey-weighting-why-and-how.html#cb50-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb50-3"><a href="survey-weighting-why-and-how.html#cb50-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb50-4"><a href="survey-weighting-why-and-how.html#cb50-4" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
-<span id="cb50-5"><a href="survey-weighting-why-and-how.html#cb50-5" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb50-6"><a href="survey-weighting-why-and-how.html#cb50-6" tabindex="-1"></a></span>
-<span id="cb50-7"><a href="survey-weighting-why-and-how.html#cb50-7" tabindex="-1"></a><span class="co"># Synthetic microdata to illustrate weighting without depending on raw ESS file quirks</span></span>
-<span id="cb50-8"><a href="survey-weighting-why-and-how.html#cb50-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb50-9"><a href="survey-weighting-why-and-how.html#cb50-9" tabindex="-1"></a>n_psu <span class="ot">&lt;-</span> <span class="dv">120</span></span>
-<span id="cb50-10"><a href="survey-weighting-why-and-how.html#cb50-10" tabindex="-1"></a>n_by_psu <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">18</span>, n_psu, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-11"><a href="survey-weighting-why-and-how.html#cb50-11" tabindex="-1"></a></span>
-<span id="cb50-12"><a href="survey-weighting-why-and-how.html#cb50-12" tabindex="-1"></a>demo_psu <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb50-13"><a href="survey-weighting-why-and-how.html#cb50-13" tabindex="-1"></a>  <span class="at">psu =</span> <span class="dv">1</span><span class="sc">:</span>n_psu,</span>
-<span id="cb50-14"><a href="survey-weighting-why-and-how.html#cb50-14" tabindex="-1"></a>  <span class="at">stratum =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, n_psu, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-15"><a href="survey-weighting-why-and-how.html#cb50-15" tabindex="-1"></a>  <span class="at">country =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;GB&quot;</span>, <span class="st">&quot;DE&quot;</span>, <span class="st">&quot;FR&quot;</span>), n_psu, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(.<span class="dv">4</span>, .<span class="dv">35</span>, .<span class="dv">25</span>)),</span>
-<span id="cb50-16"><a href="survey-weighting-why-and-how.html#cb50-16" tabindex="-1"></a>  <span class="at">pweight =</span> <span class="fu">runif</span>(n_psu, <span class="fl">0.5</span>, <span class="dv">3</span>),</span>
-<span id="cb50-17"><a href="survey-weighting-why-and-how.html#cb50-17" tabindex="-1"></a>  <span class="at">n =</span> n_by_psu</span>
-<span id="cb50-18"><a href="survey-weighting-why-and-how.html#cb50-18" tabindex="-1"></a>)</span>
-<span id="cb50-19"><a href="survey-weighting-why-and-how.html#cb50-19" tabindex="-1"></a></span>
-<span id="cb50-20"><a href="survey-weighting-why-and-how.html#cb50-20" tabindex="-1"></a>ess_w <span class="ot">&lt;-</span> demo_psu <span class="sc">|&gt;</span></span>
-<span id="cb50-21"><a href="survey-weighting-why-and-how.html#cb50-21" tabindex="-1"></a>  <span class="fu">uncount</span>(n) <span class="sc">|&gt;</span></span>
-<span id="cb50-22"><a href="survey-weighting-why-and-how.html#cb50-22" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb50-23"><a href="survey-weighting-why-and-how.html#cb50-23" tabindex="-1"></a>    <span class="at">agea =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="dv">50</span>, <span class="dv">15</span>)),</span>
-<span id="cb50-24"><a href="survey-weighting-why-and-how.html#cb50-24" tabindex="-1"></a>    <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-25"><a href="survey-weighting-why-and-how.html#cb50-25" tabindex="-1"></a>    <span class="co"># Generate outcome with country- and age-dependent probability</span></span>
-<span id="cb50-26"><a href="survey-weighting-why-and-how.html#cb50-26" tabindex="-1"></a>    <span class="at">linpred =</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.6</span> <span class="sc">*</span> (country <span class="sc">==</span> <span class="st">&quot;GB&quot;</span>) <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> (country <span class="sc">==</span> <span class="st">&quot;FR&quot;</span>) <span class="sc">+</span></span>
-<span id="cb50-27"><a href="survey-weighting-why-and-how.html#cb50-27" tabindex="-1"></a>              <span class="fl">0.01</span> <span class="sc">*</span> (agea <span class="sc">-</span> <span class="dv">50</span>) <span class="sc">+</span> <span class="fl">0.4</span> <span class="sc">*</span> (gender <span class="sc">==</span> <span class="st">&quot;Female&quot;</span>),</span>
-<span id="cb50-28"><a href="survey-weighting-why-and-how.html#cb50-28" tabindex="-1"></a>    <span class="at">news_regular =</span> <span class="fu">rbinom</span>(<span class="fu">n</span>(), <span class="dv">1</span>, <span class="fu">plogis</span>(linpred))</span>
-<span id="cb50-29"><a href="survey-weighting-why-and-how.html#cb50-29" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb50-30"><a href="survey-weighting-why-and-how.html#cb50-30" tabindex="-1"></a>  <span class="fu">select</span>(psu, stratum, country, pweight, agea, gender, news_regular) <span class="sc">|&gt;</span></span>
-<span id="cb50-31"><a href="survey-weighting-why-and-how.html#cb50-31" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">factor</span>(country),</span>
-<span id="cb50-32"><a href="survey-weighting-why-and-how.html#cb50-32" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">factor</span>(gender))</span>
-<span id="cb50-33"><a href="survey-weighting-why-and-how.html#cb50-33" tabindex="-1"></a></span>
-<span id="cb50-34"><a href="survey-weighting-why-and-how.html#cb50-34" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu =</span> <span class="st">&quot;adjust&quot;</span>)</span>
-<span id="cb50-35"><a href="survey-weighting-why-and-how.html#cb50-35" tabindex="-1"></a>des <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>psu, <span class="at">strata =</span> <span class="sc">~</span>stratum, <span class="at">weights =</span> <span class="sc">~</span>pweight,</span>
-<span id="cb50-36"><a href="survey-weighting-why-and-how.html#cb50-36" tabindex="-1"></a>                 <span class="at">data =</span> ess_w, <span class="at">nest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-37"><a href="survey-weighting-why-and-how.html#cb50-37" tabindex="-1"></a></span>
-<span id="cb50-38"><a href="survey-weighting-why-and-how.html#cb50-38" tabindex="-1"></a>svy_n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(des<span class="sc">$</span>variables)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="survey-weighting-why-and-how.html#cb51-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb51-2"><a href="survey-weighting-why-and-how.html#cb51-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb51-3"><a href="survey-weighting-why-and-how.html#cb51-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb51-4"><a href="survey-weighting-why-and-how.html#cb51-4" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb51-5"><a href="survey-weighting-why-and-how.html#cb51-5" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb51-6"><a href="survey-weighting-why-and-how.html#cb51-6" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="survey-weighting-why-and-how.html#cb51-7" tabindex="-1"></a><span class="co"># Synthetic microdata to illustrate weighting without depending on raw ESS file quirks</span></span>
+<span id="cb51-8"><a href="survey-weighting-why-and-how.html#cb51-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb51-9"><a href="survey-weighting-why-and-how.html#cb51-9" tabindex="-1"></a>n_psu <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb51-10"><a href="survey-weighting-why-and-how.html#cb51-10" tabindex="-1"></a>n_by_psu <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">8</span><span class="sc">:</span><span class="dv">18</span>, n_psu, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-11"><a href="survey-weighting-why-and-how.html#cb51-11" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="survey-weighting-why-and-how.html#cb51-12" tabindex="-1"></a>demo_psu <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb51-13"><a href="survey-weighting-why-and-how.html#cb51-13" tabindex="-1"></a>  <span class="at">psu =</span> <span class="dv">1</span><span class="sc">:</span>n_psu,</span>
+<span id="cb51-14"><a href="survey-weighting-why-and-how.html#cb51-14" tabindex="-1"></a>  <span class="at">stratum =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, n_psu, <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb51-15"><a href="survey-weighting-why-and-how.html#cb51-15" tabindex="-1"></a>  <span class="at">country =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;GB&quot;</span>, <span class="st">&quot;DE&quot;</span>, <span class="st">&quot;FR&quot;</span>), n_psu, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(.<span class="dv">4</span>, .<span class="dv">35</span>, .<span class="dv">25</span>)),</span>
+<span id="cb51-16"><a href="survey-weighting-why-and-how.html#cb51-16" tabindex="-1"></a>  <span class="at">pweight =</span> <span class="fu">runif</span>(n_psu, <span class="fl">0.5</span>, <span class="dv">3</span>),</span>
+<span id="cb51-17"><a href="survey-weighting-why-and-how.html#cb51-17" tabindex="-1"></a>  <span class="at">n =</span> n_by_psu</span>
+<span id="cb51-18"><a href="survey-weighting-why-and-how.html#cb51-18" tabindex="-1"></a>)</span>
+<span id="cb51-19"><a href="survey-weighting-why-and-how.html#cb51-19" tabindex="-1"></a></span>
+<span id="cb51-20"><a href="survey-weighting-why-and-how.html#cb51-20" tabindex="-1"></a>ess_w <span class="ot">&lt;-</span> demo_psu <span class="sc">|&gt;</span></span>
+<span id="cb51-21"><a href="survey-weighting-why-and-how.html#cb51-21" tabindex="-1"></a>  <span class="fu">uncount</span>(n) <span class="sc">|&gt;</span></span>
+<span id="cb51-22"><a href="survey-weighting-why-and-how.html#cb51-22" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb51-23"><a href="survey-weighting-why-and-how.html#cb51-23" tabindex="-1"></a>    <span class="at">agea =</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="dv">50</span>, <span class="dv">15</span>)),</span>
+<span id="cb51-24"><a href="survey-weighting-why-and-how.html#cb51-24" tabindex="-1"></a>    <span class="at">gender =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="fu">n</span>(), <span class="at">replace =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb51-25"><a href="survey-weighting-why-and-how.html#cb51-25" tabindex="-1"></a>    <span class="co"># Generate outcome with country- and age-dependent probability</span></span>
+<span id="cb51-26"><a href="survey-weighting-why-and-how.html#cb51-26" tabindex="-1"></a>    <span class="at">linpred =</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.6</span> <span class="sc">*</span> (country <span class="sc">==</span> <span class="st">&quot;GB&quot;</span>) <span class="sc">+</span> <span class="fl">0.3</span> <span class="sc">*</span> (country <span class="sc">==</span> <span class="st">&quot;FR&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-27"><a href="survey-weighting-why-and-how.html#cb51-27" tabindex="-1"></a>              <span class="fl">0.01</span> <span class="sc">*</span> (agea <span class="sc">-</span> <span class="dv">50</span>) <span class="sc">+</span> <span class="fl">0.4</span> <span class="sc">*</span> (gender <span class="sc">==</span> <span class="st">&quot;Female&quot;</span>),</span>
+<span id="cb51-28"><a href="survey-weighting-why-and-how.html#cb51-28" tabindex="-1"></a>    <span class="at">news_regular =</span> <span class="fu">rbinom</span>(<span class="fu">n</span>(), <span class="dv">1</span>, <span class="fu">plogis</span>(linpred))</span>
+<span id="cb51-29"><a href="survey-weighting-why-and-how.html#cb51-29" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb51-30"><a href="survey-weighting-why-and-how.html#cb51-30" tabindex="-1"></a>  <span class="fu">select</span>(psu, stratum, country, pweight, agea, gender, news_regular) <span class="sc">|&gt;</span></span>
+<span id="cb51-31"><a href="survey-weighting-why-and-how.html#cb51-31" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">factor</span>(country),</span>
+<span id="cb51-32"><a href="survey-weighting-why-and-how.html#cb51-32" tabindex="-1"></a>         <span class="at">gender =</span> <span class="fu">factor</span>(gender))</span>
+<span id="cb51-33"><a href="survey-weighting-why-and-how.html#cb51-33" tabindex="-1"></a></span>
+<span id="cb51-34"><a href="survey-weighting-why-and-how.html#cb51-34" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu =</span> <span class="st">&quot;adjust&quot;</span>)</span>
+<span id="cb51-35"><a href="survey-weighting-why-and-how.html#cb51-35" tabindex="-1"></a>des <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>psu, <span class="at">strata =</span> <span class="sc">~</span>stratum, <span class="at">weights =</span> <span class="sc">~</span>pweight,</span>
+<span id="cb51-36"><a href="survey-weighting-why-and-how.html#cb51-36" tabindex="-1"></a>                 <span class="at">data =</span> ess_w, <span class="at">nest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-37"><a href="survey-weighting-why-and-how.html#cb51-37" tabindex="-1"></a></span>
+<span id="cb51-38"><a href="survey-weighting-why-and-how.html#cb51-38" tabindex="-1"></a>svy_n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(des<span class="sc">$</span>variables)</span></code></pre></div>
 </div>
 <div id="weighted-descriptive-estimates" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> 1. Weighted descriptive estimates<a href="survey-weighting-why-and-how.html#weighted-descriptive-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sample used after complete-case filtering: 1556 respondents.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="survey-weighting-why-and-how.html#cb51-1" tabindex="-1"></a><span class="fu">svymean</span>(<span class="sc">~</span>news_regular, des)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="survey-weighting-why-and-how.html#cb52-1" tabindex="-1"></a><span class="fu">svymean</span>(<span class="sc">~</span>news_regular, des)</span></code></pre></div>
 <pre><code>##                 mean     SE
 ## news_regular 0.38522 0.0153</code></pre>
 <ul>
@@ -316,10 +316,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="weighted-regression-linear-probability-and-logit" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> 2. Weighted regression: linear probability and logit<a href="survey-weighting-why-and-how.html#weighted-regression-linear-probability-and-logit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="survey-weighting-why-and-how.html#cb53-1" tabindex="-1"></a>lpm_w <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country,</span>
-<span id="cb53-2"><a href="survey-weighting-why-and-how.html#cb53-2" tabindex="-1"></a>                <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">gaussian</span>())</span>
-<span id="cb53-3"><a href="survey-weighting-why-and-how.html#cb53-3" tabindex="-1"></a><span class="fu">tidy</span>(lpm_w)</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 5
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="survey-weighting-why-and-how.html#cb54-1" tabindex="-1"></a>lpm_w <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country,</span>
+<span id="cb54-2"><a href="survey-weighting-why-and-how.html#cb54-2" tabindex="-1"></a>                <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">gaussian</span>())</span>
+<span id="cb54-3"><a href="survey-weighting-why-and-how.html#cb54-3" tabindex="-1"></a><span class="fu">tidy</span>(lpm_w)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 5
 ##   term        estimate std.error statistic     p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 (Intercept)  0.240    0.0493        4.86 0.00000453 
@@ -327,10 +327,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 genderMale  -0.0875   0.0243       -3.60 0.000509   
 ## 4 countryFR    0.0679   0.0390        1.74 0.0851     
 ## 5 countryGB    0.155    0.0276        5.61 0.000000193</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="survey-weighting-why-and-how.html#cb55-1" tabindex="-1"></a>logit_w <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country,</span>
-<span id="cb55-2"><a href="survey-weighting-why-and-how.html#cb55-2" tabindex="-1"></a>                  <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">quasibinomial</span>())</span>
-<span id="cb55-3"><a href="survey-weighting-why-and-how.html#cb55-3" tabindex="-1"></a><span class="fu">tidy</span>(logit_w, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 5
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="survey-weighting-why-and-how.html#cb56-1" tabindex="-1"></a>logit_w <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> country,</span>
+<span id="cb56-2"><a href="survey-weighting-why-and-how.html#cb56-2" tabindex="-1"></a>                  <span class="at">design =</span> des, <span class="at">family =</span> <span class="fu">quasibinomial</span>())</span>
+<span id="cb56-3"><a href="survey-weighting-why-and-how.html#cb56-3" tabindex="-1"></a><span class="fu">tidy</span>(logit_w, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 5
 ##   term        estimate std.error statistic     p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
 ## 1 (Intercept)    0.327   0.221       -5.06 0.00000204 

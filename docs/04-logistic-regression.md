@@ -147,7 +147,7 @@ lpm_tidy <- broom::tidy(lpm1, conf.int = TRUE, vcov = lpm_vcov)
 
 
 ```
-## # A tibble: 5 x 7
+## # A tibble: 5 × 7
 ##   term        estimate std.error statistic  p.value conf.low conf.high
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
 ## 1 (Intercept) -0.0861  0.00569      -15.1  1.43e-51 -0.0973   -0.0750 
@@ -180,7 +180,7 @@ Odds ratios > 1 indicate higher odds of being a regular news reader.
 
 
 ```
-## # A tibble: 5 x 7
+## # A tibble: 5 × 7
 ##   term        estimate std.error statistic  p.value conf.low conf.high
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
 ## 1 (Intercept)   0.0175  0.0624      -64.9  0          0.0155    0.0197
@@ -208,7 +208,7 @@ plot_gender_country <- ggplot(nd2, aes(x = country, y = pr, fill = gender)) +
 
 
 ```
-## # A tibble: 7 x 7
+## # A tibble: 7 × 7
 ##   term                 estimate std.error statistic  p.value conf.low conf.high
 ##   <chr>                   <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
 ## 1 (Intercept)            0.0180  0.0662      -60.7  0          0.0158    0.0205
@@ -240,7 +240,7 @@ plot_gender_age <- ggplot(nd3, aes(x = agea, y = pr, color = gender)) +
 
 
 ```
-## # A tibble: 7 x 7
+## # A tibble: 7 × 7
 ##   term            estimate std.error statistic   p.value conf.low conf.high
 ##   <chr>              <dbl>     <dbl>     <dbl>     <dbl>    <dbl>     <dbl>
 ## 1 (Intercept)       0.0109   0.114      -39.6  0          0.00868    0.0136
@@ -272,7 +272,7 @@ plot_age_edu <- ggplot(nd4, aes(x = eduyrs, y = pr, color = factor(agea))) +
 
 
 ```
-## # A tibble: 7 x 7
+## # A tibble: 7 × 7
 ##   term        estimate std.error statistic  p.value conf.low conf.high
 ##   <chr>          <dbl>     <dbl>     <dbl>    <dbl>    <dbl>     <dbl>
 ## 1 (Intercept)   0.0133  0.223      -19.4   1.12e-83  0.00860    0.0206
@@ -305,7 +305,7 @@ plot_threeway <- ggplot(nd5, aes(x = agea, y = pr, color = gender)) +
 
 
 ```
-## # A tibble: 13 x 7
+## # A tibble: 13 × 7
 ##    term                estimate std.error statistic   p.value conf.low conf.high
 ##    <chr>                  <dbl>     <dbl>     <dbl>     <dbl>    <dbl>     <dbl>
 ##  1 (Intercept)          0.00660   0.164     -30.7   2.20e-206  0.00477   0.00907
@@ -315,12 +315,12 @@ plot_threeway <- ggplot(nd5, aes(x = agea, y = pr, color = gender)) +
 ##  5 countryGB            3.30      0.187       6.38  1.73e- 10  2.29      4.76   
 ##  6 eduyrs               1.03      0.00452     7.28  3.30e- 13  1.02      1.04   
 ##  7 genderMale:agea      1.01      0.00336     2.79  5.33e-  3  1.00      1.02   
-##  8 genderMale:country~  1.29      0.324       0.793 4.28e-  1  0.685     2.44   
-##  9 genderMale:country~  2.46      0.260       3.46  5.37e-  4  1.48      4.10   
+##  8 genderMale:country…  1.29      0.324       0.793 4.28e-  1  0.685     2.44   
+##  9 genderMale:country…  2.46      0.260       3.46  5.37e-  4  1.48      4.10   
 ## 10 agea:countryFR       0.986     0.00387    -3.66  2.57e-  4  0.979     0.993  
 ## 11 agea:countryGB       0.986     0.00311    -4.69  2.77e-  6  0.980     0.992  
-## 12 genderMale:agea:co~  0.998     0.00542    -0.400 6.89e-  1  0.987     1.01   
-## 13 genderMale:agea:co~  0.985     0.00438    -3.34  8.46e-  4  0.977     0.994
+## 12 genderMale:agea:co…  0.998     0.00542    -0.400 6.89e-  1  0.987     1.01   
+## 13 genderMale:agea:co…  0.985     0.00438    -3.34  8.46e-  4  0.977     0.994
 ```
 
 <img src="04-logistic-regression_files/figure-html/logit5-out-1.png" width="672" />
@@ -357,7 +357,7 @@ me_female_diff <- data.frame(agea = c(25,65), diff = pred_f - pred_m)  # from fi
 
 
 ```
-## # A tibble: 2 x 2
+## # A tibble: 2 × 2
 ##   variable                    AME
 ##   <chr>                     <dbl>
 ## 1 agea (+1 year)          0.00451

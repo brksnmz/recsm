@@ -87,7 +87,7 @@ tidy(lpm_w)
 ```
 
 ```
-## # A tibble: 5 x 5
+## # A tibble: 5 × 5
 ##   term        estimate std.error statistic     p.value
 ##   <chr>          <dbl>     <dbl>     <dbl>       <dbl>
 ## 1 (Intercept)  0.240    0.0493        4.86 0.00000453 
@@ -105,7 +105,7 @@ tidy(logit_w, exponentiate = TRUE)
 ```
 
 ```
-## # A tibble: 5 x 5
+## # A tibble: 5 × 5
 ##   term        estimate std.error statistic     p.value
 ##   <chr>          <dbl>     <dbl>     <dbl>       <dbl>
 ## 1 (Intercept)    0.327   0.221       -5.06 0.00000204 

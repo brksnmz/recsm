@@ -252,30 +252,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Country fixed effects (dummies):</strong> absorbs unobserved, time-invariant differences between GB, DE, and FR.</li>
 <li><strong>Multilevel (random-intercept) logistic regression:</strong> partially pools country effects, reducing noise for small samples and enabling variance decomposition.</li>
 </ul>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb45-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb45-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-3" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb45-4"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-4" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
-<span id="cb45-5"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-5" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb45-6"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-6" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb45-7"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-7" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-8" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;R/clean_ess.R&quot;</span>)</span>
-<span id="cb45-9"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-9" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb45-10" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">clean_ess</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb46-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb46-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-3" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb46-4"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-4" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
+<span id="cb46-5"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-5" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb46-6"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-6" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb46-7"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-7" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-8" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;R/clean_ess.R&quot;</span>)</span>
+<span id="cb46-9"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-9" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-10" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">clean_ess</span>()</span></code></pre></div>
 <div id="country-fixed-effects-logit-with-dummies" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> 1. Country fixed effects (logit with dummies)<a href="country-effects-fixed-effects-and-multilevel-modeling.html#country-fixed-effects-logit-with-dummies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ul>
 <li><strong>Model</strong>: <code>news_regular ~ agea + gender + eduyrs + country</code></li>
 <li><strong>Interpretation</strong>: Country coefficients capture average gaps relative to the reference country (DE, alphabetically first).</li>
 </ul>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-1" tabindex="-1"></a>fe_logit <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> eduyrs <span class="sc">+</span> country,</span>
-<span id="cb46-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-2" tabindex="-1"></a>                <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb46-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb46-3" tabindex="-1"></a>fe_tidy <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(fe_logit, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb47-1" tabindex="-1"></a>fe_logit <span class="ot">&lt;-</span> <span class="fu">glm</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> eduyrs <span class="sc">+</span> country,</span>
+<span id="cb47-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb47-2" tabindex="-1"></a>                <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb47-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb47-3" tabindex="-1"></a>fe_tidy <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(fe_logit, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div id="odds-ratios" class="section level4 tabset hasAnchor" number="6.1.0.1">
 <h4><span class="header-section-number">6.1.0.1</span> Odds ratios<a href="country-effects-fixed-effects-and-multilevel-modeling.html#odds-ratios" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <div id="table" class="section level5 hasAnchor" number="6.1.0.1.1">
 <h5><span class="header-section-number">6.1.0.1.1</span> Table<a href="country-effects-fixed-effects-and-multilevel-modeling.html#table" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<pre><code>## # A tibble: 6 x 7
+<pre><code>## # A tibble: 6 × 7
 ##   term        estimate std.error statistic  p.value conf.low conf.high
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 (Intercept)  0.00997  0.0971      -47.5  0         0.00824    0.0121
@@ -298,12 +298,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>Model</strong>: <code>news_regular ~ agea + gender + eduyrs + (1 | country)</code></li>
 <li><strong>Why</strong>: Partial pooling shrinks extreme country estimates toward the grand mean, improving out-of-sample stability.</li>
 </ul>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb48-1" tabindex="-1"></a>ml_logit <span class="ot">&lt;-</span> <span class="fu">glmer</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> eduyrs <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country),</span>
-<span id="cb48-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb48-2" tabindex="-1"></a>                  <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
-<span id="cb48-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb48-3" tabindex="-1"></a>                  <span class="at">control =</span> <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>))</span>
-<span id="cb48-4"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb48-4" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb48-5" tabindex="-1"></a>var_u0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(ml_logit)<span class="sc">$</span>country)</span>
-<span id="cb48-6"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb48-6" tabindex="-1"></a>icc <span class="ot">&lt;-</span> var_u0 <span class="sc">/</span> (var_u0 <span class="sc">+</span> pi<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-1" tabindex="-1"></a>ml_logit <span class="ot">&lt;-</span> <span class="fu">glmer</span>(news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> eduyrs <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> country),</span>
+<span id="cb49-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-2" tabindex="-1"></a>                  <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb49-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-3" tabindex="-1"></a>                  <span class="at">control =</span> <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>))</span>
+<span id="cb49-4"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-4" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-5" tabindex="-1"></a>var_u0 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">VarCorr</span>(ml_logit)<span class="sc">$</span>country)</span>
+<span id="cb49-6"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-6" tabindex="-1"></a>icc <span class="ot">&lt;-</span> var_u0 <span class="sc">/</span> (var_u0 <span class="sc">+</span> pi<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">3</span>)</span></code></pre></div>
 <p>Intraclass correlation (ICC): 2.58% of the variance in the log-odds of regular news use is at the country level.</p>
 <div id="country-predictions-fixed-vs-multilevel" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Country predictions: fixed vs multilevel<a href="country-effects-fixed-effects-and-multilevel-modeling.html#country-predictions-fixed-vs-multilevel" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -319,11 +319,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="random-slopes-for-gender-optional-extension" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> 3. Random slopes for gender (optional extension)<a href="country-effects-fixed-effects-and-multilevel-modeling.html#random-slopes-for-gender-optional-extension" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>With more countries, we could allow the gender gap to vary by country:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-1" tabindex="-1"></a>ml_logit_gender <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
-<span id="cb49-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-2" tabindex="-1"></a>  news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> eduyrs <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> gender <span class="sc">|</span> country),</span>
-<span id="cb49-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-3" tabindex="-1"></a>  <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
-<span id="cb49-4"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-4" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>)</span>
-<span id="cb49-5"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb49-5" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb50-1" tabindex="-1"></a>ml_logit_gender <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb50-2"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb50-2" tabindex="-1"></a>  news_regular <span class="sc">~</span> agea <span class="sc">+</span> gender <span class="sc">+</span> eduyrs <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> gender <span class="sc">|</span> country),</span>
+<span id="cb50-3"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb50-3" tabindex="-1"></a>  <span class="at">data =</span> ess, <span class="at">family =</span> <span class="fu">binomial</span>(),</span>
+<span id="cb50-4"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb50-4" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">glmerControl</span>(<span class="at">optimizer =</span> <span class="st">&quot;bobyqa&quot;</span>)</span>
+<span id="cb50-5"><a href="country-effects-fixed-effects-and-multilevel-modeling.html#cb50-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>In the current three-country sample this model may be over-parameterized; the random-intercept specification above is the stable classroom default.</p>
 </div>
 <div id="practice-prompts" class="section level2 hasAnchor" number="6.4">
